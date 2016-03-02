@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">SpiroMeter</string>
+    <string name="app_name">Spirometer</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_bluetooth_connect">BluetoothConnectActivity</string>
 </resources>
