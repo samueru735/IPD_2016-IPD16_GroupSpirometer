@@ -1,37 +1,22 @@
 package com.group4.ipd16.spirometer;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    private Button btnStartBluetooth;
-    private Intent bluetoothActivityIntent;
+public class BluetoothConnectActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        btnStartBluetooth = (Button)findViewById(R.id.btnStartBluetooth);
-        bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
-
-        btnStartBluetooth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(bluetoothActivityIntent);
-            }
-        });
+        setContentView(R.layout.activity_bluetooth_connect);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_bluetooth_connect, menu);
         return true;
     }
 
