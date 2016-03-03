@@ -1,5 +1,6 @@
 package com.group4.ipd16.spirometer;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,17 +38,42 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+
     }
 
     private void addDrawerItems(){
-        String[] osArray = {"Android", "IOS", "Linux", "Windows"};
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        String[] activityArray = {"Login", "Home", "Results", "History", "Share"};
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, activityArray);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(MainActivity.this, "Some random text", Toast.LENGTH_SHORT).show();
+
+                if (id == 0) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                }
+                if (id == 1) {
+                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(i);
+                }
+                if (id == 2) {
+                    Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
+                    startActivity(i);
+                }
+                if (id == 3) {
+                    Intent i = new Intent(getApplicationContext(), HistoryActivity.class);
+                    startActivity(i);
+                }
+                if (id == 4) {
+                    Intent i = new Intent(getApplicationContext(), ShareActivity.class);
+                    startActivity(i);
+                }
+
+                mDrawerLayout.closeDrawers();
             }
         });
     }
