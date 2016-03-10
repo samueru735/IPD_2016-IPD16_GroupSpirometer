@@ -20,14 +20,14 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
+
             android:name=".BluetoothDeviceListActivity"
             android:label="@string/title_activity_bluetooth_connect" >
         </activity>
         <activity
             android:name=".BluetoothConnectActivity"
-            android:label="@string/title_activity_bluetooth_connect" >
-=======
+            android:label="@string/title_activity_bluetooth_connect" />
+        <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
@@ -42,7 +42,6 @@
         <activity
             android:name=".ShareActivity"
             android:label="@string/title_activity_share" >
->>>>>>> refs/remotes/origin/master
         </activity>
     </application>
 

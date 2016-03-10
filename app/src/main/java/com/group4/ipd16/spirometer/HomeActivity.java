@@ -1,16 +1,31 @@
 package com.group4.ipd16.spirometer;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private Button btnStartBluetooth;
+    private Intent bluetoothActivityIntent;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        btnStartBluetooth = (Button)findViewById(R.id.btnStartBluetooth);
+        bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
+
+        btnStartBluetooth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(bluetoothActivityIntent);
+            }
+        });
     }
 
     @Override
