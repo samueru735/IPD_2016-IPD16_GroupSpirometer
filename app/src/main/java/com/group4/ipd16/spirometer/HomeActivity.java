@@ -1,9 +1,12 @@
 package com.group4.ipd16.spirometer;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -11,6 +14,17 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Button begin;
+        begin = (Button)findViewById(R.id.TESTbutton);
+
+        begin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent beginIntent = new Intent(HomeActivity.this, TestActivity.class);
+                startActivity(beginIntent);
+            }
+        });
     }
 
     @Override

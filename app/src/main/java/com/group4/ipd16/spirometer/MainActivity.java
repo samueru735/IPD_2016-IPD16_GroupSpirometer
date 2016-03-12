@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
 
     }
 
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Some random text", Toast.LENGTH_SHORT).show();
 
                 if (id == 0) {
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(i);
                 }
                 if (id == 1) {
