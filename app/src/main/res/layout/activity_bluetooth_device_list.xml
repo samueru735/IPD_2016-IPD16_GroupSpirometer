@@ -35,13 +35,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tvInfoText"
+        android:textSize="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:padding="5dp"/>
+        android:padding="10dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bluetooth settings"
+        android:layout_gravity="center"
+        android:text="@string/btnBtSettings"
         android:id="@+id/btnBtSettings"/>
 
 
