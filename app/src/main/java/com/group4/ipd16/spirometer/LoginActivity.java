@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,10 +24,33 @@ public class LoginActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
+    Button loginKnop;
+    EditText user;
+    EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        /*login */
+        user = (EditText)findViewById(R.id.usertext);
+        password = (EditText)findViewById(R.id.passwordtext);
+        loginKnop = (Button)findViewById(R.id.loginbttn);
+
+        loginKnop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(user.toString() == "admin" && password.toString()== "123") {
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         /* Drawer Menu initialization */
         mDrawerList = (ListView) findViewById(R.id.navList);
