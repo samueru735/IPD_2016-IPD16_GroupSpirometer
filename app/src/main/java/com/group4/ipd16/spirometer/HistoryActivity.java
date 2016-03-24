@@ -1,11 +1,10 @@
 package com.group4.ipd16.spirometer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends LoginActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
