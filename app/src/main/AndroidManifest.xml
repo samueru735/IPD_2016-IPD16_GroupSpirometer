@@ -25,9 +25,6 @@
             android:label="@string/title_activity_bluetooth_connect" >
         </activity>
         <activity
-            android:name=".BluetoothConnectActivity"
-            android:label="@string/title_activity_bluetooth_connect" />
-        <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>

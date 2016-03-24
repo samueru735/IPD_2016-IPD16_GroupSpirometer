@@ -91,7 +91,7 @@ public class BluetoothDeviceListActivity extends Activity {
                 String macAddress = deviceNameAndAddress.substring(deviceNameAndAddress.length()-17);
 
                 // make intent and send MAC address with it
-                Intent i = new Intent(BluetoothDeviceListActivity.this, BluetoothConnectActivity.class);
+                Intent i = new Intent(BluetoothDeviceListActivity.this, HomeActivity.class);
                 i.putExtra(MAC_ADDRESS, macAddress);
                 startActivity(i);
             }
