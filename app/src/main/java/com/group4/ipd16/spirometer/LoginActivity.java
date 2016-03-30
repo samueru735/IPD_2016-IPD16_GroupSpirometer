@@ -11,21 +11,47 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
+
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
+    Button loginKnop;
+    EditText user;
+    EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+
+        /*login */
+        user = (EditText)findViewById(R.id.usertext);
+        password = (EditText)findViewById(R.id.passwordtext);
+        loginKnop = (Button)findViewById(R.id.loginbttn);
+
+        loginKnop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(user.toString() == "admin" && password.toString()== "123") {
+                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(i);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         /* Drawer Menu initialization */
         mDrawerList = (ListView) findViewById(R.id.navList);
@@ -38,10 +64,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
 
     }
 
-    private void addDrawerItems(){
+    public void addDrawerItems(){
         String[] activityArray = {"Login", "Home", "Results", "History", "Share"};
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, activityArray);
         mDrawerList.setAdapter(mAdapter);
@@ -49,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Some random text", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Some random text", Toast.LENGTH_SHORT).show();
 
                 if (id == 0) {
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(i);
                 }
                 if (id == 1) {
@@ -77,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupDrawer() {
+    public void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.drawer_open, R.string.drawer_close){
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {

@@ -23,4 +23,5 @@
 
     // home activity
     <string name="tvConnStatus">Connection status:</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
