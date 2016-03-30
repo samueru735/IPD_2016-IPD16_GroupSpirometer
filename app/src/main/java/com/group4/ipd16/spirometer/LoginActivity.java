@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 public class LoginActivity extends AppCompatActivity {
 
     private ListView mDrawerList;
@@ -63,8 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(i);
 
     }
 
@@ -120,9 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+
     }
 
     @Override
