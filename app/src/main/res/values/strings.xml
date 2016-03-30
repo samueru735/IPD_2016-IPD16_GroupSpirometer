@@ -23,5 +23,6 @@
 
     // home activity
     <string name="tvConnStatus">Connection status:</string>
-    <string name="title_activity_login">LoginActivity</string>
+    // login activity
+    <string name="title_activity_login">Spirometer</string>
 </resources>
