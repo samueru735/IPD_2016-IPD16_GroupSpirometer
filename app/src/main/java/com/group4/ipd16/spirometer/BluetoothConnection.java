@@ -144,8 +144,11 @@ public class BluetoothConnection{
                                     {
                                         public void run()
                                         {
-                                            listResults.add(Float.parseFloat(data.toString()));
-                                            result.setText(listResults.toString());
+                                            //listResults.add(Float.parseFloat(data.toString()));
+                                            String dataString = data.toString();
+                                            String testData = dataString.trim();
+                                            //Float test = Float.valueOf(testData);
+                                            result.setText(testData.toString());
                                             Log.i("TAG", "data received");
                                         }
                                     });
