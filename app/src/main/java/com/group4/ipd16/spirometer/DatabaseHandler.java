@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHandler extends SQLiteOpenHelper{
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -36,6 +39,75 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         // Creating tables again
         onCreate(db);
+    }
+
+    // Adding new user
+    public void addUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_FIRST_NAME, user.getFirst_name());
+        values.put(KEY_LAST_NAME, user.getLast_name());
+        values.put(KEY_DOCTOR_EMAIL, user.getDoctor_email());
+        // Inserting Row
+        db.insert(TABLE_USERS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    // Getting one user
+    public User getUser(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID,
+                        KEY_FIRST_NAME, KEY_LAST_NAME,KEY_DOCTOR_EMAIL }, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        User contact = new User(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        // return user
+        return contact;
+    }
+
+    // Getting All Users
+    public List<User> getAllUsers() {
+        List<User> userList = new ArrayList<User>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_USERS;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(Integer.parseInt(cursor.getString(0)));
+                user.setFirst_name(cursor.getString(1));
+                user.setLast_name(cursor.getString(2));
+                user.setDoctor_email(cursor.getString(3));
+        // Adding contact to list
+                userList.add(user);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return userList;
+    }
+
+    // Updating a user
+    public int updateUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_FIRST_NAME, user.getFirst_name());
+        values.put(KEY_LAST_NAME, user.getLast_name());
+        values.put(KEY_DOCTOR_EMAIL, user.getDoctor_email());
+        // updating row
+        return db.update(TABLE_USERS, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(user.getId())});
+    }
+
+    // Deleting a user
+    public void deleteUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USERS, KEY_ID + " = ?",
+                new String[] { String.valueOf(user.getId()) });
+        db.close();
     }
 
 }

@@ -6,7 +6,11 @@ public class User {
     private String last_name;
     private String doctor_email;
 
-    //constructor
+    //constructors
+    public User() {
+
+    }
+
     public User(int id, String first_name, String last_name, String doctor_email) {
         this.id = id;
         this.first_name = first_name;
