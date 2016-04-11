@@ -60,15 +60,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="E-mail"
+            android:text="User"
             android:id="@+id/textView5" />
 
-        <EditText
+        <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/usertext" />
+            android:id="@+id/userSpinner" />
 
         <TextView
             android:layout_width="wrap_content"
