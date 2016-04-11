@@ -19,8 +19,6 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/logo"
-
             android:layout_weight="1" />
 
         <TextView

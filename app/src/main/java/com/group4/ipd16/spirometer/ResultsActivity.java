@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ResultsActivity extends AppCompatActivity {
+public class ResultsActivity extends BaseActivity {
     BluetoothConnection btConn;
     Intent intent;
     private TextView tvResult, tvSentData, tvConnStatus;
@@ -27,7 +27,8 @@ public class ResultsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results);
+        //setContentView(R.layout.activity_results);
+        getLayoutInflater().inflate(R.layout.activity_results, frameLayout);
 
         Bundle b = this.getIntent().getExtras();
         try{
@@ -61,6 +62,7 @@ public class ResultsActivity extends AppCompatActivity {
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
         graph.addSeries(series);
+
     }
 
     @Override

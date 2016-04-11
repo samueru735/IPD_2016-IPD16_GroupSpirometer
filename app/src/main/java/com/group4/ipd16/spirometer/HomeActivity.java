@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private Button btnStartBluetooth, btnSendStart, btnStartResultActivity;
     private Intent bluetoothActivityIntent, resultIntent;
@@ -27,7 +27,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        //setContentView(R.layout.activity_home);
+        getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
+
         Intent i = getIntent();
         userName = i.getStringExtra("userName");
         listResult = new ArrayList<Float>();

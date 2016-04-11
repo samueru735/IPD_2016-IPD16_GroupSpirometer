@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.Set;
 
-public class BluetoothDeviceListActivity extends Activity {
+public class BluetoothDeviceListActivity extends BaseActivity {
 
     private TextView tvConnectionStatus;  // connection status
     private ListView lvPairedListView;    // paired bluetooth devices
@@ -29,7 +29,9 @@ public class BluetoothDeviceListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bluetooth_device_list);
+        //setContentView(R.layout.activity_bluetooth_device_list);
+        getLayoutInflater().inflate(R.layout.activity_bluetooth_device_list, frameLayout);
+
 
         tvConnectionStatus = (TextView) findViewById(R.id.tvConnecting);
         tvConnectionStatus.setTextSize(40);
