@@ -12,7 +12,8 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.Exception;import java.lang.IllegalAccessException;import java.lang.NoSuchMethodException;import java.lang.Runnable;import java.lang.String;import java.lang.System;import java.lang.Thread;import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -29,13 +30,13 @@ public class BluetoothConnection{
     private Thread workerThread;
     private byte[] readBuffer;
     private int readBufferPosition;
-    private int counter;
+    private int counter;        // can be used later
     private volatile boolean stopWorker;
     private String mac_address;
     private Intent intent;
     private TextView tvConnectInfo;
     private TextView result, sentdata;
-    private List<Float>listResults;
+    private List<Float> listResults;
 
 
     public void SentData(TextView sentdata) {
@@ -46,6 +47,17 @@ public class BluetoothConnection{
     }
     public void ListResults(List<Float> listResults){
         this.listResults = listResults;
+        Log.i("TAG", "listresults: "+ listResults.toString());
+    }
+
+    public float[] getListResults(){
+        float[] results = new float[listResults.size()];
+        int i = 0;
+        for (Float f : listResults) {
+            results[i++] = (f != null ? f : 0);
+        }
+        Log.i("TAG", "bt_results " + Arrays.toString(results));
+        return results;
     }
 
     public String Connect(String macaddress){
@@ -54,7 +66,6 @@ public class BluetoothConnection{
         try
         {
             findBT();
-
             openBT();
             return "Connected";
         }
@@ -73,18 +84,12 @@ public class BluetoothConnection{
             myLabel.setText("No bluetooth adapter available");
         }
 
-       /* if(!mBluetoothAdapter.isEnabled())
-        {
-            Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBluetooth, 0);
-        } */
-
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if(pairedDevices.size() > 0)
         {
             for(BluetoothDevice device : pairedDevices)
             {
-                //if(device.getName().equals("gekozenNaam"))
+                //if(device.getName().equals("spiroSensor"))
                 if(device.getAddress().equals(mac_address))
                 {
                     mmDevice = device; Log.i("TAG","gotcha");
@@ -98,13 +103,11 @@ public class BluetoothConnection{
         Log.i("TAG", "openBT");
         UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
         mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
-        //mmSocket =(BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(mmDevice,2);
         Log.i("TAG", "before");
         mmSocket.connect();
         Log.i("TAG", "after");
         mmOutputStream = mmSocket.getOutputStream();
         mmInputStream = mmSocket.getInputStream();
-
 
         beginListenForData();
     }
@@ -112,8 +115,8 @@ public class BluetoothConnection{
     void beginListenForData()
     {
        final Handler handler = new Handler();
-        final byte delimiter = 10; //This is the ASCII code for a newline character
-
+        final byte delimiter = 10; // ASCII code for a newline character
+        Log.i("TAG", "start listening");
         stopWorker = false;
         readBufferPosition = 0;
         readBuffer = new byte[1024];
@@ -144,11 +147,16 @@ public class BluetoothConnection{
                                     {
                                         public void run()
                                         {
-                                            //listResults.add(Float.parseFloat(data.toString()));
-                                            String dataString = data.toString();
-                                            String testData = dataString.trim();
-                                            //Float test = Float.valueOf(testData);
-                                            result.setText(testData.toString());
+                                            try {
+                                                Log.i("TAG", "trying");
+                                                listResults.add(Float.parseFloat(data.toString()));
+                                            }
+                                            catch (Exception e){
+                                                e.printStackTrace();
+                                            }
+                                            //String dataString = data.toString();
+                                           // String testData = dataString.trim();
+                                            result.setText(listResults.toString());
                                             Log.i("TAG", "data received");
                                         }
                                     });
@@ -184,17 +192,18 @@ public class BluetoothConnection{
         msg += "\n";
         mmOutputStream.write(msg.getBytes());
         sentdata.setText("data sent: " + msg);
-        //myLabel.setText("Data Sent");
     }
 
     void closeBT() throws IOException
     {
         stopWorker = true;
-        mmOutputStream.close();
-        mmInputStream.close();
-        mmSocket.close();
-        myLabel.setText("Bluetooth Closed");
+        if(mmOutputStream != null)
+            mmOutputStream.close();
+        if(mmInputStream != null)
+            mmInputStream.close();
+        if(mmSocket != null)
+            mmSocket.close();
+        Log.i("TAG","Bluetooth Closed");
     }
-
-
+    
 }
