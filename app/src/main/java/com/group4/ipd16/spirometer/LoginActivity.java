@@ -14,7 +14,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,32 +27,39 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private Spinner userSpinner;
     private String mActivityTitle;
 
-    Button loginKnop;
-    EditText user;
-    EditText password;
+    private Button loginKnop;
+    private EditText user, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // voeg users toe aan de Spinner (dropdownlist)
+        addUsersToSpinner();
+
+
         /*login */
-        user = (EditText)findViewById(R.id.usertext);
+        //user = (EditText)findViewById(R.id.usertext);
         password = (EditText)findViewById(R.id.passwordtext);
         loginKnop = (Button)findViewById(R.id.loginbttn);
 
         loginKnop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(user.toString() == "admin" && password.toString()== "123") {
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                i.putExtra("userName" ,String.valueOf(userSpinner.getSelectedItem()));
+                startActivity(i);
+                /*if(user.toString() == "admin" && password.toString()== "123") {
                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(i);
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 
@@ -65,6 +76,22 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
+    }
+
+    private void addUsersToSpinner() {
+        userSpinner = (Spinner)findViewById(R.id.userSpinner);
+        List<String> userList = new ArrayList<String>();
+
+        // binnenkort hier de namen uit de db halen
+        userList.add("Samuel");
+        userList.add("Bob");
+        userList.add("Arthur");
+        userList.add("Rember");
+        userList.add("Gianni");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userSpinner.setAdapter(dataAdapter);
     }
 
     public void addDrawerItems(){
