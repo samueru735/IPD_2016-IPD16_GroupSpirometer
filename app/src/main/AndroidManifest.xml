@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-
             android:name=".BluetoothDeviceListActivity"
             android:label="@string/title_activity_bluetooth_connect" >
         </activity>
@@ -39,6 +38,10 @@
         <activity
             android:name=".ShareActivity"
             android:label="@string/title_activity_share" >
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register" >
         </activity>
     </application>
 

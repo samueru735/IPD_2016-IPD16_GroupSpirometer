@@ -90,6 +90,17 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return userList;
     }
 
+    // Getting users Count
+    public int getUsersCount() {
+        String countQuery = "SELECT * FROM " + TABLE_USERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        // return count
+        return count;
+    }
+
     // Updating a user
     public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();

@@ -97,6 +97,18 @@
             android:layout_marginTop="30dp"
             android:onClick="initButton"
             />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:id="@+id/registerbttn"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFFF"
+            android:textStyle="bold"
+            android:background="#F000"
+            android:layout_marginTop="10dp"
+            />
     </LinearLayout>
 </RelativeLayout>
 <ListView
