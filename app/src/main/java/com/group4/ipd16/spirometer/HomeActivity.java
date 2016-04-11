@@ -8,23 +8,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        //setContentView(R.layout.activity_home);
+        getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
+
 
         Button begin;
         begin = (Button)findViewById(R.id.TESTbutton);
 
-        begin.setOnClickListener(new View.OnClickListener() {
+        /*begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent beginIntent = new Intent(HomeActivity.this, TestActivity.class);
                 startActivity(beginIntent);
             }
-        });
+        });*/
     }
 
     @Override
