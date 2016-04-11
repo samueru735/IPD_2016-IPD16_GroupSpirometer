@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,7 +83,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void openActivity(int position){
-        drawerLayout.closeDrawers();
+        //drawerLayout.closeDrawers();
+        drawerLayout.closeDrawer(drawerList);
         BaseActivity.position = position;
 
         switch (position) {
@@ -109,12 +111,12 @@ public class BaseActivity extends AppCompatActivity {
         Toast.makeText(this, "Selected Item Position::"+position, Toast.LENGTH_LONG).show();
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -159,4 +161,17 @@ public class BaseActivity extends AppCompatActivity {
 
         super.setContentView(frameLayout);
     }*/
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU){
+            if (!drawerLayout.isDrawerOpen(drawerList)){
+                drawerLayout.openDrawer(drawerList);
+            } else if (drawerLayout.isDrawerOpen(drawerList)){
+                drawerLayout.closeDrawer(drawerList);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
