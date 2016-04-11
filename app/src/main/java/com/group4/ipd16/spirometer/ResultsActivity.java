@@ -2,10 +2,11 @@ package com.group4.ipd16.spirometer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -23,13 +24,14 @@ public class ResultsActivity extends BaseActivity {
     private TextView tvResult, tvSentData, tvConnStatus;
     private double[] resultsArray;
     private List<Double> listResults = new ArrayList<Double>();
+    private Button btnSendMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_results);
-        getLayoutInflater().inflate(R.layout.activity_results, frameLayout);
+        setContentView(R.layout.activity_results);
 
+        getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
         Bundle b = this.getIntent().getExtras();
         try{
             resultsArray =  b.getDoubleArray("results");
@@ -45,6 +47,16 @@ public class ResultsActivity extends BaseActivity {
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
         tvSentData = (TextView)findViewById(R.id.tvSentData);
+        btnSendMail = (Button)findViewById(R.id.btnSendMail);
+
+        btnSendMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ResultsActivity.this, ShareActivity.class);
+                i.putExtra("results", ArrayUtils.toDoubleArray(listResults));
+                startActivity(i);
+            }
+        });
 
         tvResult.setText(listResults.toString()); //Arrays.toString(resultsArray));
 
@@ -62,6 +74,27 @@ public class ResultsActivity extends BaseActivity {
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
         graph.addSeries(series);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_results, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

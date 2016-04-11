@@ -16,7 +16,11 @@ package com.group4.ipd16.spirometer;
  * limitations under the License.
  */
 
+import android.util.Log;
+
 import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 // XXX these should be changed to reflect the actual memory allocator we use.
 // it looks like right now objects want to be powers of 2 minus 8
@@ -134,23 +138,46 @@ public class ArrayUtils
         return false;
     }
     /**
-     * <p>Converts an array of primitive chars to objects.</p>
+     * <p>Converts an array of primitive doubles to objects.</p>
      *
      * <p>This method returns {@code null} for a {@code null} input array.</p>
      *
-     * @param array a {@code char} array
-     * @return a {@code Character} array, {@code null} if null array input
+     * @param array a {@code double} array
+     * @return a {@code Double} array, {@code null} if null array input
      */
     public static Double[] toObject(final double[] array) {
         if (array == null) {
             return null;
-                } else if (array.length == 0) {
-                    return EMPTY_DOUBLE_OBJECT_ARRAY;
-                }
-            final Double[] result = new Double[array.length];
-            for (int i = 0; i < array.length; i++) {
-                    result[i] = Double.valueOf(array[i]);
-                }
-            return result;
-         }
+        } else if (array.length == 0) {
+            return EMPTY_DOUBLE_OBJECT_ARRAY;
+        }
+        final Double[] result = new Double[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = Double.valueOf(array[i]);
+        }
+        return result;
+    }
+
+    /** my code to convert from List<Double> to double[]
+     *
+     */
+    public static float[] toFloatArray(List<Float> lf) {
+        float[] results = new float[lf.size()];
+        int i = 0;
+        for (Float f : lf) {
+            results[i++] = (f != null ? f : 0);
+        }
+        Log.i("TAG", "bt_results " + Arrays.toString(results));
+        return results;
+    }
+
+    public static double[] toDoubleArray(List<Double> ld){
+        double[] results = new double[ld.size()];
+        int i = 0;
+        for (Double d : ld) {
+            results[i++] = (d != null ? d : 0);
+        }
+        Log.i("TAG", "bt_results " + Arrays.toString(results));
+        return results;
+    }
 }

@@ -16,25 +16,22 @@
         android:textSize="24sp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvConnStatus"
-        android:text="@string/tvConnStatus"
-        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvResult"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvSentData"
-        />
+
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dip"
         android:id="@+id/graphResults"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSendMail"
+        android:id="@+id/btnSendMail"
         />
 </LinearLayout>
