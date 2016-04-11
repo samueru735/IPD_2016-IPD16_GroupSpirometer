@@ -20,12 +20,12 @@ import android.widget.Toast;
 
 public class BaseActivity extends AppCompatActivity {
 
-    public DrawerLayout drawerLayout;
-    public ListView drawerList;
+    protected DrawerLayout drawerLayout;
+    protected ListView drawerList;
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private ArrayAdapter<String> drawerAdapter;
-    public FrameLayout frameLayout;
+    protected FrameLayout frameLayout;
 
 
     @Override
