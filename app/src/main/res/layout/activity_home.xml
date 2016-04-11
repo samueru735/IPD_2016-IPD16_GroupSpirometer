@@ -7,25 +7,6 @@
     tools:context="com.group4.ipd16.spirometer.HomeActivity"
     android:orientation="vertical"
     >
-
-    <!--Include in order for navigation to work-->
-    <!--<include layout="@layout/navigation_drawer"/>-->
-    <!--<android.support.v4.widget.DrawerLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        &lt;!&ndash; Side navigation drawer UI &ndash;&gt;
-        <ListView
-            android:id="@+id/navList"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left|start"
-            android:background="#ffeeeeee"/>
-
-    </android.support.v4.widget.DrawerLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,19 +71,51 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect to device"
+                android:id="@+id/btnStartBluetooth" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show result"
+                android:id="@+id/btnShowResultActivity"
+                android:visibility="gone"/>
+        </LinearLayout>
+
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="BEGIN TEST"
-            android:id="@+id/TESTbutton"
+            android:id="@+id/btnSendStart"
             android:layout_gravity="center_horizontal"
             android:textColor="#FFFF"
             android:textStyle="bold"
             android:background="#F000"
-            android:layout_marginTop="30dp"
-            android:onClick="initButton"
+            android:layout_marginTop="30dp"            
             />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvConnStatus"
+        android:text="@string/tvConnStatus"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvResult"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvSentData"
+        />
     </LinearLayout>
-</LinearLayout>
 
+</LinearLayout>

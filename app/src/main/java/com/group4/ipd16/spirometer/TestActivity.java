@@ -1,22 +1,24 @@
 package com.group4.ipd16.spirometer;
 
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+public class TestActivity extends BaseActivity {
 
-public class HistoryActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_history);
-        getLayoutInflater().inflate(R.layout.activity_history, frameLayout);
+        //setContentView(R.layout.activity_test);
+        getLayoutInflater().inflate(R.layout.activity_test, frameLayout);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_history, menu);
+        getMenuInflater().inflate(R.menu.menu_test, menu);
         return true;
     }
 

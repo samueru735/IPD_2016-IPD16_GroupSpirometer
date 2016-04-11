@@ -22,11 +22,12 @@ public class BaseActivity extends AppCompatActivity {
 
     protected DrawerLayout drawerLayout;
     protected ListView drawerList;
+    protected FrameLayout frameLayout;
     private ActionBarDrawerToggle drawerToggle;
     private String activityTitle;
     private ArrayAdapter<String> drawerAdapter;
-    protected FrameLayout frameLayout;
-
+    protected static int position;
+    private static boolean isLaunch = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,30 +55,7 @@ public class BaseActivity extends AppCompatActivity {
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(BaseActivity.this, "Some random text", Toast.LENGTH_SHORT).show();
-
-                if (id == 0) {
-                    //Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                    //startActivity(i);
-                }
-                if (id == 1) {
-                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(i);
-                }
-                if (id == 2) {
-                    Intent i = new Intent(getApplicationContext(), ResultsActivity.class);
-                    startActivity(i);
-                }
-                if (id == 3) {
-                    Intent i = new Intent(getApplicationContext(), HistoryActivity.class);
-                    startActivity(i);
-                }
-                if (id == 4) {
-                    Intent i = new Intent(getApplicationContext(), ShareActivity.class);
-                    startActivity(i);
-                }
-
-                drawerLayout.closeDrawers();
+                openActivity(position);
             }
         });
     }
@@ -101,6 +79,34 @@ public class BaseActivity extends AppCompatActivity {
 
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
+    }
+
+    protected void openActivity(int position){
+        drawerLayout.closeDrawers();
+        BaseActivity.position = position;
+
+        switch (position) {
+            case 0:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(this, HomeActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(this, ResultsActivity.class));
+                break;
+            case 3:
+                startActivity(new Intent(this, HistoryActivity.class));
+                break;
+            case 4:
+                startActivity(new Intent(this, ShareActivity.class));
+                break;
+
+            default:
+                break;
+        }
+
+        Toast.makeText(this, "Selected Item Position::"+position, Toast.LENGTH_LONG).show();
     }
 
     @Override
