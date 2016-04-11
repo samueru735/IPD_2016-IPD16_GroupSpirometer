@@ -8,6 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -43,15 +47,20 @@ public class ResultsActivity extends AppCompatActivity {
 
         tvResult.setText(listResults.toString()); //Arrays.toString(resultsArray));
 
-      /*  btConn.Result(tvResult);
-        btConn.ListResults(listResult);
-        btConn.SentData(tvSentData);
+        DrawGraph();
+    }
 
-        try {
-            btConn.sendData("start");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+    private void DrawGraph() {
+        // init example series data
+        GraphView graph = (GraphView)findViewById(R.id.graphResults);
+
+        DataPoint[]resultDataPoints = new DataPoint[listResults.size()];
+        for(int i = 0; i < listResults.size(); i++)
+        {
+            resultDataPoints[i] = new DataPoint(i, listResults.get(i));
+        }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
+        graph.addSeries(series);
     }
 
     @Override
