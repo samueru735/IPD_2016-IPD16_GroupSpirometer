@@ -33,6 +33,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_login);
         getLayoutInflater().inflate(R.layout.activity_login, frameLayout);
+        drawerList.setItemChecked(position,true);
 
         // voeg users toe aan de Spinner (dropdownlist)
         addUsersToSpinner();

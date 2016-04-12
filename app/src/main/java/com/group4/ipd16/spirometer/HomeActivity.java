@@ -29,6 +29,7 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_home);
         getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
+        drawerList.setItemChecked(position,true);
 
         Intent i = getIntent();
         userName = i.getStringExtra("userName");

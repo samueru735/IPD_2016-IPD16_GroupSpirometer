@@ -47,6 +47,8 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+
+
     }
     private void addDrawerItems(){
         String[] activityArray = {"Login", "Home", "Results", "History", "Share"};
@@ -80,6 +82,11 @@ public class BaseActivity extends AppCompatActivity {
 
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
+
+        if(isLaunch){
+            isLaunch = false;
+            openActivity(0);
+        }
     }
 
     protected void openActivity(int position){
@@ -124,18 +131,23 @@ public class BaseActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        if (drawerToggle.onOptionsItemSelected(item)){
+            return  true;
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
-        if (drawerToggle.onOptionsItemSelected(item)){
-            return  true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
+
+/*    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = drawerLayout.isDrawerOpen(drawerList);
+        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }*/
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
