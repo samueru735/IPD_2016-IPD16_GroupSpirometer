@@ -29,9 +29,9 @@ public class ResultsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results);
+       // setContentView(R.layout.activity_results);
+        getLayoutInflater().inflate(R.layout.activity_results, frameLayout);
 
-        getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
         Bundle b = this.getIntent().getExtras();
         try{
             resultsArray =  b.getDoubleArray("results");
