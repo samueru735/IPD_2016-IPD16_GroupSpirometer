@@ -51,7 +51,7 @@ private int n = 20;
         {
             resultDataPoints[i] = new DataPoint(i, listResults.get(i));
         }
-        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(resultDataPoints);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(resultDataPoints);
         graph.addSeries(series);
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
@@ -59,19 +59,8 @@ private int n = 20;
         staticLabelsFormatter.setVerticalLabels(new String[]{"-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "LITER"});
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setScrollable(true);
-        // set manual X bounds
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(0.5);
-        graph.getViewport().setMaxX(3.5);
 
-// set manual Y bounds
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(3.5);
-        graph.getViewport().setMaxY(8);
-
-        series.setTitle("Results");
+        series.setTitle("(FVC, forced vital capacity) in L/s");
 
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);

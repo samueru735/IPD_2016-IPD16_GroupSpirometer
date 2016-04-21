@@ -29,30 +29,20 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_home);
         getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
-        drawerList.setItemChecked(position, true);
+        drawerList.setItemChecked(position,true);
 
         Intent i = getIntent();
         userName = i.getStringExtra("userName");
         listResult = new ArrayList<Float>();
         btnStartBluetooth = (Button)findViewById(R.id.btnStartBluetooth);
-        btnSendStart = (Button)findViewById(R.id.TEST);
+        btnSendStart = (Button)findViewById(R.id.btnSendStart);
         btnStartResultActivity = (Button)findViewById(R.id.btnShowResultActivity);
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
         resultIntent = new Intent(this, ResultsActivity.class);
-//        //
-        test = (Button)findViewById(R.id.testknop);
 
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, TestActivity.class);
-                startActivity(i);
-            }
-        });
-//
         btnStartBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

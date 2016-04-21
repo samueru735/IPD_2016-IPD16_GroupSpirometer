@@ -1,17 +1,22 @@
 package com.group4.ipd16.spirometer;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class TestActivity extends BaseActivity {
 
-    protected static final int TIMER_RUNTIME = 10000;
-    protected boolean mbActive;
-    protected ProgressBar mProgressBar;
+    private ProgressBar progressBar;
+    private TextView progressText;
+    private int progressStatus =0;
+    private Handler handler = new Handler();
+    private Button start;
 
 
 
@@ -21,42 +26,36 @@ public class TestActivity extends BaseActivity {
         //setContentView(R.layout.activity_test);
         getLayoutInflater().inflate(R.layout.activity_test, frameLayout);
 
+        progressBar = (ProgressBar)findViewById(R.id.myProgressBar);
+        progressText = (TextView)findViewById(R.id.myProgressText);
+        start = (Button)findViewById(R.id.knopSTART);
 
-        mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
-
-        final Thread timerThread = new Thread(){
+        start.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                mbActive = true;
-                try{
-                    int waited = 0;
-                    while(mbActive && (waited < TIMER_RUNTIME)){
-                        sleep(200);
-                        if(mbActive){
-                            waited += 200;
-                            updateProgress(waited);
-                            Log.d("GO", "LOADING");
+            public void onClick(View v) {
+                progressStatus = 0;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (progressStatus < 100) {
+                            progressStatus += 1;
+                            handler.post(new Runnable() {
+                                public void run() {
+                                    progressBar.setProgress(progressStatus);
+                                    progressText.setText("Progress: " + progressStatus + " / " + progressBar.getMax());
+                                }
+                            });
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    Log.d("FAIL", "FAIL");
-                }finally {
-                    onContinue();
-                }
+                }).start();
             }
-        };
-        timerThread.start();
+        });
+
     }
 
-    public void  updateProgress(final int timePassed){
-        if(null != mProgressBar){
-            final int progress = mProgressBar.getMax() * timePassed / TIMER_RUNTIME;
-            mProgressBar.setProgress(progress);
-        }
-    }
-
-    public void onContinue(){
-        Log.d("messageFinal", "Loading bar just loaded");
-    }
 }
