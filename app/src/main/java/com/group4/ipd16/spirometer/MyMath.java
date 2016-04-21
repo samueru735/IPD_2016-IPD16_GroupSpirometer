@@ -33,7 +33,7 @@ public class MyMath {
         int indexEnd = listResults.size() - 1;
 
         for(int i = 1; i < listResults.size(); i++){
-            if(listResults.get(i) > 0.5 && listResults.get(i) >= listResults.get(i-1) + 0.5 ){
+            if(listResults.get(i) > 0.50 && listResults.get(i) >= listResults.get(i-1) + 0.50 ){
                 indexStart = i - 2;
             }
             if(indexStart >= 0 && listResults.get(i) <= 0.3 ){
