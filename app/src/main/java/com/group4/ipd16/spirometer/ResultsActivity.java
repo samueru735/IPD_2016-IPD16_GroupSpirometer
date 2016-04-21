@@ -25,6 +25,7 @@ public class ResultsActivity extends BaseActivity {
     Intent intent;
     private TextView tvResult, tvSentData, tvConnStatus;
     private double[] resultsArray;
+    private double fvc;
     private List<Double> listResults = new ArrayList<Double>();
     private Button btnSendMail;
 
@@ -44,8 +45,9 @@ public class ResultsActivity extends BaseActivity {
         catch (Exception e){
             e.printStackTrace();
         }
-        MyMath.FilterZeroResults(listResults);
-        MyMath.FilterExpiration(listResults);
+        listResults = MyMath.FilterZeroResults(listResults);
+        listResults = MyMath.FilterExpiration(listResults);
+        fvc = MyMath.FVC(listResults);
 
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
@@ -57,11 +59,13 @@ public class ResultsActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent i = new Intent(ResultsActivity.this, ShareActivity.class);
                 i.putExtra("results", ArrayUtils.toDoubleArray(listResults));
+                i.putExtra("fvc", fvc);
                 startActivity(i);
             }
         });
 
-        //tvResult.setText(listResults.toString()); //Arrays.toString(resultsArray));
+
+        tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
 
         DrawGraph();
     }
