@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -74,6 +75,7 @@ public class ResultsActivity extends BaseActivity {
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
         graph.addSeries(series);
+
     }
 
     @Override

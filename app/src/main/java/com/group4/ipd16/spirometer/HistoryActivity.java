@@ -3,10 +3,17 @@ package com.group4.ipd16.spirometer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.jjoe64.graphview.series.Series;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,7 +39,6 @@ private int n = 20;
         {
             Integer r = rand.nextInt() % 256;
             arrayRandom.add(r);
-
         }
         DrawGraph(arrayRandom);
     }
@@ -45,8 +51,29 @@ private int n = 20;
         {
             resultDataPoints[i] = new DataPoint(i, listResults.get(i));
         }
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
+        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<>(resultDataPoints);
         graph.addSeries(series);
 
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+        staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "2", "3", "4", "5", "6", "7", "8", "9", "10", " ", "SEC."});
+        staticLabelsFormatter.setVerticalLabels(new String[]{"-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "LITER"});
+        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScrollable(true);
+        // set manual X bounds
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(0.5);
+        graph.getViewport().setMaxX(3.5);
+
+// set manual Y bounds
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(3.5);
+        graph.getViewport().setMaxY(8);
+
+        series.setTitle("Results");
+
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
     }
 }
