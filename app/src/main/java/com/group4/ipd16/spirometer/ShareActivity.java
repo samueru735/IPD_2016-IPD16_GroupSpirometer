@@ -18,6 +18,7 @@ public class ShareActivity extends BaseActivity {
     private Button btnTestMail;
     private User user;
     private double[] arrayResults;
+    private double fvc;
     private Calendar cal;
     String currentDateTime;
 
@@ -29,7 +30,7 @@ public class ShareActivity extends BaseActivity {
         btnTestMail = (Button)findViewById(R.id.btnTestMail);
         Intent i = getIntent();
         arrayResults = i.getDoubleArrayExtra("results");
-
+        fvc = i.getDoubleExtra("fvc", 0.00);
         currentDateTime = DateFormat.getDateTimeInstance().format(new Date());
 
         sendMail();
@@ -47,6 +48,8 @@ public class ShareActivity extends BaseActivity {
         sbMessage.append("Results on ");
         sbMessage.append(currentDateTime);
         sbMessage.append("\n");
+        sbMessage.append("\n");
+        sbMessage.append("FVC: " + fvc);
         sbMessage.append("\n");
         sbMessage.append(Arrays.toString(arrayResults));
 
