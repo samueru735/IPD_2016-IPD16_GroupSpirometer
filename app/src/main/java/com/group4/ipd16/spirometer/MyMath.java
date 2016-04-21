@@ -2,6 +2,7 @@ package com.group4.ipd16.spirometer;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,5 +50,23 @@ public class MyMath {
         listResults.subList(0, indexStart).clear();
 
         return listResults;
+    }
+
+    public static Double FVC(List<Double>listResults) { // time between results: 10 ms
+        double fvc = 0;
+        int delay = 50; //ms
+
+        List<Double> intermediaryResults = new ArrayList<Double>();
+        for ( int i = 0; i < listResults.size(); i++){
+            intermediaryResults.add(listResults.get(i)*delay);
+        }
+
+        for (double result: intermediaryResults
+             ) {
+            fvc += result;
+        }
+        fvc /= 1000;
+
+        return fvc;
     }
 }
