@@ -44,7 +44,8 @@ public class ResultsActivity extends BaseActivity {
         catch (Exception e){
             e.printStackTrace();
         }
-        MyMath.FilterResults(listResults);
+        MyMath.FilterZeroResults(listResults);
+        MyMath.FilterExpiration(listResults);
 
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
@@ -60,7 +61,7 @@ public class ResultsActivity extends BaseActivity {
             }
         });
 
-        tvResult.setText(listResults.toString()); //Arrays.toString(resultsArray));
+        //tvResult.setText(listResults.toString()); //Arrays.toString(resultsArray));
 
         DrawGraph();
     }
