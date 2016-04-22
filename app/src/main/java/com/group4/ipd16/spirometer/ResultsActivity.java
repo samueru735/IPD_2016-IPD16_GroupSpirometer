@@ -46,8 +46,7 @@ public class ResultsActivity extends BaseActivity {
             e.printStackTrace();
         }
         listResults = MyMath.FilterZeroResults(listResults);
-        listResults = MyMath.FilterExpiration(listResults);
-        fvc = MyMath.FVC(listResults);
+
 
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
@@ -68,6 +67,8 @@ public class ResultsActivity extends BaseActivity {
         tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
 
         DrawGraph();
+        listResults = MyMath.FilterExpiration(listResults);
+        fvc = MyMath.FVC(listResults);
     }
 
     private void DrawGraph() {
