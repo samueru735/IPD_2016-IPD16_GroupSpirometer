@@ -63,12 +63,10 @@ public class ResultsActivity extends BaseActivity {
             }
         });
 
-
-        tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
-
         DrawGraph();
         listResults = MyMath.FilterExpiration(listResults);
         fvc = MyMath.FVC(listResults);
+        tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
     }
 
     private void DrawGraph() {
