@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +47,19 @@ public class LoginActivity extends BaseActivity {
         loginKnop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                i.putExtra("userName" ,String.valueOf(userSpinner.getSelectedItem()));
-                startActivity(i);
+                String userID = getSpiroDB().login(userSpinner.getSelectedItem().toString(), password.getText().toString());
+                switch (userID){
+                    case "Access denied": Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "": Toast.makeText(LoginActivity.this, "User does not exist...", Toast.LENGTH_SHORT).show();
+                        break;
+                    default: Toast.makeText(LoginActivity.this, "Logging in with uId " + userID, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        i.putExtra("userName" ,String.valueOf(userSpinner.getSelectedItem()));
+                        startActivity(i);
+                        break;
+                }
+
                 /*if(user.toString() == "admin" && password.toString()== "123") {
                     Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(i);
@@ -60,25 +71,28 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+
     private void addUsersToSpinner() {
         userSpinner = (Spinner)findViewById(R.id.userSpinner);
         List<String> userList = new ArrayList<String>();
-        DatabaseHandler db = new DatabaseHandler(this);
+        //DatabaseHandler db = new DatabaseHandler(this);
+        CouchbaseDB spiroDB = getSpiroDB(); // noSql couchbase
         List<User> users = new ArrayList<>();
 
         // risky try catch, needs to be updated
         try{
-            users = db.getAllUsers();
+            //users = db.getAllUsers();
+            userList = spiroDB.getAllUsers();
         }
         catch (Exception ex){
             LoginActivity.this.deleteDatabase("userInfo");
         }
 
-        if(users != null ){
-            for (User user : users) {
-                userList.add(user.getFirst_name());
+        /*if(users != null ){
+            for (String user : userList) {
+                userList.add(user);
             }
-        }
+        } */
 
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userList);
