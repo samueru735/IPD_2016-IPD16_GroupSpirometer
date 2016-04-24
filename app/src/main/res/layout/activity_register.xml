@@ -17,17 +17,6 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editLastName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="Last name" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/editFirstName"
         android:password="false"
@@ -37,7 +26,17 @@
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/btnRegister"
         android:layout_toStartOf="@+id/btnRegister"
-        android:text="First name" />
+        android:hint="First name" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editLastName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Last name" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -45,7 +44,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editPassword"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="35dp"
         android:layout_below="@+id/editLastName"
         android:layout_toRightOf="@+id/textView8"
         android:layout_toEndOf="@+id/textView8" />
@@ -56,18 +55,18 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/editDoctor"
-        android:text="Doctor email"
+        android:hint="Doctor email"
         android:layout_below="@+id/editPassword"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp" />
+        android:layout_marginTop="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password:"
         android:id="@+id/textView8"
-        android:layout_alignTop="@+id/editPassword"
+        android:layout_alignBaseline="@+id/editPassword"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="@android:color/black"
@@ -85,7 +84,7 @@
         android:layout_marginTop="47dp"
         android:layout_toLeftOf="@+id/editLastName"
         android:layout_toStartOf="@+id/editLastName"
-        android:text="Height" />
+        android:hint="Height" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -98,7 +97,7 @@
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/editDoctor"
         android:layout_toEndOf="@+id/editDoctor"
-        android:text="Weight" />
+        android:hint="Weight" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -112,7 +111,7 @@
         android:layout_marginTop="25dp"
         android:layout_toLeftOf="@+id/btnRegister"
         android:layout_toStartOf="@+id/btnRegister"
-        android:text="Age" />
+        android:hint="Age" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -122,22 +121,26 @@
         android:layout_alignLeft="@+id/editWeight"
         android:layout_alignStart="@+id/editWeight" />
 
-    <RadioButton
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Male"
-        android:id="@+id/radioButtonMale"
         android:layout_above="@+id/btnRegister"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:id="@+id/radioButtonMale"
+            android:checked="true"/>
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Female"
-        android:id="@+id/radioButtonFemale"
-        android:layout_above="@+id/btnRegister"
-        android:layout_alignLeft="@+id/editPassword"
-        android:layout_alignStart="@+id/editPassword" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:id="@+id/radioButtonFemale"
+ />
+    </RadioGroup>
+
 
 </RelativeLayout>
