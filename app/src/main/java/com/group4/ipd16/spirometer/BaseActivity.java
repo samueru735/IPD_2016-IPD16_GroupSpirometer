@@ -2,6 +2,7 @@ package com.group4.ipd16.spirometer;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,14 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class BaseActivity extends AppCompatActivity {
@@ -29,6 +28,9 @@ public class BaseActivity extends AppCompatActivity {
     private ArrayAdapter<String> drawerAdapter;
     protected static int position;
     private static boolean isLaunch = true;
+    private Context context;
+
+    private CouchbaseDB spiroDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,18 @@ public class BaseActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-
-
+        
+        spiroDB = new CouchbaseDB(context);
     }
+
+    protected CouchbaseDB getSpiroDB(){
+        if(spiroDB != null)
+            return spiroDB;
+        else
+            return new CouchbaseDB(context);
+    }
+
+
     private void addDrawerItems(){
         String[] activityArray = {"Login", "Home", "Results", "History", "Share"};
         drawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, activityArray);
