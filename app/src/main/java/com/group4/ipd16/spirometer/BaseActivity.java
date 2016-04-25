@@ -37,6 +37,8 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
 
+        context = BaseActivity.this;
+
         /* Drawer Menu initialization */
         drawerList = (ListView) findViewById(R.id.navList);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -48,7 +50,8 @@ public class BaseActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        
+
+
         spiroDB = new CouchbaseDB(context);
     }
 
