@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import junit.framework.Test;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +32,9 @@ public class HomeActivity extends BaseActivity {
         //setContentView(R.layout.activity_home);
         getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
         drawerList.setItemChecked(position,true);
-
+        //test
+        test = (Button)findViewById(R.id.testKNOP);
+        //
         Intent i = getIntent();
         userName = i.getStringExtra("userName");
         listResult = new ArrayList<Float>();
@@ -42,6 +46,16 @@ public class HomeActivity extends BaseActivity {
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
         resultIntent = new Intent(this, ResultsActivity.class);
+
+        //test
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, TestActivity.class);
+                startActivity(i);
+            }
+        });
+        //
 
         btnStartBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
