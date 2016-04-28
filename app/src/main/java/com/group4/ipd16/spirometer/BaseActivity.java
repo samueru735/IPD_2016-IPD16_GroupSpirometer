@@ -2,13 +2,13 @@ package com.group4.ipd16.spirometer;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,17 +28,19 @@ public class BaseActivity extends AppCompatActivity {
     private ArrayAdapter<String> drawerAdapter;
     protected static int position;
     private static boolean isLaunch = true;
-    private Context context;
 
-    private CouchbaseDB spiroDB;
+    private static final String USER_ID = "user_id";
+   // protected SharedPreferences sharedPref;
+
+    protected CouchbaseDB spiroDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
 
-        context = BaseActivity.this;
-
+        //context = BaseActivity.this;
+        //sharedPref = getSharedPreferences(USER_ID, MODE_PRIVATE);
         /* Drawer Menu initialization */
         drawerList = (ListView) findViewById(R.id.navList);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -51,20 +53,22 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        Log.i("TAG", "BaseActivity");
 
-        spiroDB = new CouchbaseDB(context);
+
+     //   spiroDB = CouchbaseDB.getSpiroDB();
     }
 
-    protected CouchbaseDB getSpiroDB(){
+  /*  protected CouchbaseDB getSpiroDB(){
         if(spiroDB != null)
             return spiroDB;
         else
             return new CouchbaseDB(context);
-    }
+    } */
 
 
     private void addDrawerItems(){
-        String[] activityArray = {"Login", "Home", "Results", "History", "Share"};
+        String[] activityArray = {"Login", "Home", "Results", "History", "Share", "Profile"};
         drawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, activityArray);
         drawerList.setAdapter(drawerAdapter);
 
@@ -123,7 +127,9 @@ public class BaseActivity extends AppCompatActivity {
             case 4:
                 startActivity(new Intent(this, ShareActivity.class));
                 break;
-
+            case 5:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
             default:
                 break;
         }

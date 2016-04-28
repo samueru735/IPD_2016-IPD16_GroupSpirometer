@@ -1,5 +1,6 @@
 package com.group4.ipd16.spirometer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,16 +19,25 @@ public class LoginActivity extends BaseActivity {
 
     private Button loginKnop, registerBtn;
     private EditText user, password;
+    private CouchbaseDB spiroDB;
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_login);
         getLayoutInflater().inflate(R.layout.activity_login, frameLayout);
-        drawerList.setItemChecked(position,true);
+        drawerList.setItemChecked(position, true);
 
         // voeg users toe aan de Spinner (dropdownlist)
+        context = getApplicationContext();
+        spiroDB = new CouchbaseDB();
+        spiroDB.setContext(context);
+        spiroDB = CouchbaseDB.getSpiroDB();
+
+        spiroDB.setUpCouchbaseLiteDB();
         addUsersToSpinner();
+
 
 
         /*login */
@@ -47,15 +57,19 @@ public class LoginActivity extends BaseActivity {
         loginKnop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userID = getSpiroDB().login(userSpinner.getSelectedItem().toString(), password.getText().toString());
-                switch (userID){
-                    case "Access denied": Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
+                String userID = CouchbaseDB.getSpiroDB().login(userSpinner.getSelectedItem().toString(), password.getText().toString());
+                switch (userID) {
+                    case "Access denied":
+                        Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
                         break;
-                    case "": Toast.makeText(LoginActivity.this, "User does not exist...", Toast.LENGTH_SHORT).show();
+                    case "":
+                        Toast.makeText(LoginActivity.this, "User does not exist...", Toast.LENGTH_SHORT).show();
                         break;
-                    default: Toast.makeText(LoginActivity.this, "Logging in with uId " + userID, Toast.LENGTH_SHORT).show();
+                    default:
+                        Toast.makeText(LoginActivity.this, "Logging in with uId " + userID, Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                        i.putExtra("userName" ,String.valueOf(userSpinner.getSelectedItem()));
+                        i.putExtra("user_id", userID);
+                        i.putExtra("userName", String.valueOf(userSpinner.getSelectedItem()));
                         startActivity(i);
                         break;
                 }
@@ -76,7 +90,7 @@ public class LoginActivity extends BaseActivity {
         userSpinner = (Spinner)findViewById(R.id.userSpinner);
         List<String> userList = new ArrayList<String>();
         //DatabaseHandler db = new DatabaseHandler(this);
-        CouchbaseDB spiroDB = getSpiroDB(); // noSql couchbase
+        //spiroDB = CouchbaseDB.getSpiroDB(); // noSql couchbase
         List<User> users = new ArrayList<>();
 
         // risky try catch, needs to be updated

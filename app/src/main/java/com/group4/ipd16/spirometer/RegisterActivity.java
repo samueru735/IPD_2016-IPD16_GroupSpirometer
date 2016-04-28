@@ -21,7 +21,7 @@ public class RegisterActivity extends BaseActivity {
     private int userid;
     private String gender;
     DatabaseHandler db = new DatabaseHandler(this);
-    private CouchbaseDB spiroDB;
+   // private CouchbaseDB spiroDB;
     private EditText[] inputFields;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class RegisterActivity extends BaseActivity {
         //setContentView(R.layout.activity_register);
         getLayoutInflater().inflate(R.layout.activity_register, frameLayout);
 
-        spiroDB = getSpiroDB();
+        //spiroDB = getSpiroDB();
 
         Button btnRegister = (Button) findViewById(R.id.btnRegister);
         final EditText editFirstName = (EditText) findViewById(R.id.editFirstName);
@@ -82,7 +82,7 @@ public class RegisterActivity extends BaseActivity {
                     profile.put("ethnicity", ethnicitySpinner.getSelectedItem().toString());
                     profile.put("gender", gender);
                     profile.put("password", editPassword.getText().toString());
-                    spiroDB.CreateDocument(profile);
+                    CouchbaseDB.getSpiroDB().CreateDocument(profile);
                 /*userid = db.getUsersCount() + 1;
                 db.addUser(new User(userid, editFirstName.getText().toString(), editLastName.getText().toString(),
                         editDoctor.getText().toString(), Integer.parseInt(editAge.getText().toString()), Integer.parseInt(editHeight.getText().toString()),
@@ -94,6 +94,12 @@ public class RegisterActivity extends BaseActivity {
         });
 
     }
+  /*  getSpiroDB(){
+        if(spiroDB != null)
+            return spiroDB.getSpiroDB();
+        else
+            return new CouchbaseDB(RegisterActivity.this);
+    } */
 
    /* private boolean controlNumberFields() {
         boolean pass = true;

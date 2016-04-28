@@ -2,13 +2,14 @@ package com.group4.ipd16.spirometer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import junit.framework.Test;
 
@@ -23,26 +24,35 @@ public class HomeActivity extends BaseActivity {
     private Intent bluetoothActivityIntent, resultIntent;
     private String mac_address, userName;
     private BluetoothConnection btConn;
-    private TextView tvResult, tvSentData, tvConnStatus;
+    private TextView tvResult, tvSentData, tvConnStatus, tvWelcome;
     private List<Float> listResult;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_home);
         getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
-        drawerList.setItemChecked(position,true);
-        //test
+        drawerList.setItemChecked(position, true);
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openActivity(position);
+            }
+        });
         test = (Button)findViewById(R.id.testKNOP);
-        //
+
         Intent i = getIntent();
         userName = i.getStringExtra("userName");
+        userID = i.getStringExtra("user_id");
         listResult = new ArrayList<Float>();
         btnStartBluetooth = (Button)findViewById(R.id.btnStartBluetooth);
         btnSendStart = (Button)findViewById(R.id.btnSendStart);
         btnStartResultActivity = (Button)findViewById(R.id.btnShowResultActivity);
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
+        tvWelcome = (TextView)findViewById(R.id.tvWelcome);
+        tvWelcome.setText("Welcome " + userName);
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
         resultIntent = new Intent(this, ResultsActivity.class);
@@ -100,6 +110,7 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+
     @Override
     public void onResume(){
         super.onResume();
@@ -119,5 +130,38 @@ public class HomeActivity extends BaseActivity {
         btConn.ListResults(listResult);
         btConn.SentData(tvSentData);
         tvConnStatus.setText("Connectionstatus: " + btConn.Connect(mac_address));
+    }
+
+    protected void openActivity(int position){
+        //drawerLayout.closeDrawers();
+        drawerLayout.closeDrawer(drawerList);
+        BaseActivity.position = position;
+
+        switch (position) {
+            case 0:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(this, HomeActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(this, ResultsActivity.class));
+                break;
+            case 3:
+                startActivity(new Intent(this, HistoryActivity.class));
+                break;
+            case 4:
+                startActivity(new Intent(this, ShareActivity.class));
+                break;
+            case 5:
+                Intent i = new Intent(this, ProfileActivity.class);
+                i.putExtra("user_id", userID);
+                startActivity(i);
+                break;
+            default:
+                break;
+        }
+
+        Toast.makeText(this, "Selected Item Position::" + position, Toast.LENGTH_LONG).show();
     }
 }

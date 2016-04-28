@@ -2,6 +2,7 @@ package com.group4.ipd16.spirometer;
 
 public class User {
     private int id;
+    private String userId;
     private String first_name;
     private String last_name;
     private String doctor_email;
@@ -16,7 +17,17 @@ public class User {
     public User() {
 
     }
-
+    public User(String userId, String first_name, String last_name, String doctor_email, String age, String height, String weight, String gender, String ethnicity) {
+        this.userId = userId;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.doctor_email = doctor_email;
+        this.age = Integer.parseInt(age);
+        this.height = Integer.parseInt(height);
+        this.weight= Integer.parseInt(weight);
+        this.gender = gender;
+        this.ethnicity = ethnicity;
+    }
     public User(int id, String first_name, String last_name, String doctor_email, int age, int height, int weight, String gender, String ethnicity) {
         this.id = id;
         this.first_name = first_name;
