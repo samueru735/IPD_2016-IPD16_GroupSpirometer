@@ -1,5 +1,6 @@
 package com.group4.ipd16.spirometer;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -81,7 +82,7 @@ private int n = 20;
 
         //graph.getViewport().setScrollable(true);
 
-        GridLabelRenderer testlabel = new GridLabelRenderer(graph);
+
 
 
         //graph.getLegendRenderer().setVisible(true);
