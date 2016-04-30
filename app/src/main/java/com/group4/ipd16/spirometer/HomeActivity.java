@@ -3,15 +3,11 @@ package com.group4.ipd16.spirometer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import junit.framework.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +41,7 @@ public class HomeActivity extends BaseActivity {
         Intent i = getIntent();
         userName = i.getStringExtra("userName");
         userID = i.getStringExtra("user_id");
-        listResult = new ArrayList<Float>();
+        listResult = new ArrayList<>();
         btnStartBluetooth = (Button)findViewById(R.id.btnStartBluetooth);
         btnSendStart = (Button)findViewById(R.id.btnSendStart);
         btnStartResultActivity = (Button)findViewById(R.id.btnShowResultActivity);
@@ -90,6 +86,7 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    btConn.sendData("x");
                     btConn.closeBT();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -115,8 +112,10 @@ public class HomeActivity extends BaseActivity {
     public void onResume(){
         super.onResume();
         try{
-            Intent i = getIntent();
+            //Log.i("TAG", "Mac address: " + mac_address);
+           Intent i = getIntent();
             mac_address = i.getStringExtra("mac address");
+            Log.i("TAG", "Mac address after intent: " + mac_address);
             ConnectToDevice();
             //tvResult.setText(listResult.toString());
         }
@@ -125,11 +124,16 @@ public class HomeActivity extends BaseActivity {
         }
     }
     private void ConnectToDevice() {
-        btConn = new BluetoothConnection();
-        btConn.Result(tvResult);
-        btConn.ListResults(listResult);
-        btConn.SentData(tvSentData);
-        tvConnStatus.setText("Connectionstatus: " + btConn.Connect(mac_address));
+
+            btConn = BluetoothConnection.getInstance();
+            btConn.Result(tvResult);
+            btConn.ListResults(listResult);
+            btConn.SentData(tvSentData);
+            if(mac_address != null)
+                btConn.setMacAddress(mac_address);
+            tvConnStatus.setText("Connectionstatus: " + btConn.Connect());
+
+
     }
 
     protected void openActivity(int position){

@@ -32,11 +32,29 @@ public class BluetoothConnection{
     private int readBufferPosition;
     private int counter;        // can be used later
     private volatile boolean stopWorker;
-    private String mac_address;
+    //private String mac_address;
     private Intent intent;
     private TextView tvConnectInfo;
     private TextView result, sentdata;
     private List<Float> listResults;
+
+    private static BluetoothConnection mIstance = null;
+
+    private String mac_address;
+
+    private BluetoothConnection(){
+        mac_address = "none";
+    }
+
+    public void setMacAddress(String value){
+        mac_address = value;
+    }
+
+    public static BluetoothConnection getInstance(){
+        if(mIstance == null)
+            mIstance = new BluetoothConnection();
+        return mIstance;
+    }
 
 
     public void SentData(TextView sentdata) {
@@ -60,8 +78,8 @@ public class BluetoothConnection{
         return results;
     }
 
-    public String Connect(String macaddress){
-        this.mac_address = macaddress;
+    public String Connect(){//String macaddress){
+        //this.mac_address = macaddress;
         Log.i("TAG", mac_address);
         try
         {
@@ -71,10 +89,13 @@ public class BluetoothConnection{
         }
         catch (Exception ex) {
             Log.e("TAG", "Connection to " + mmDevice.getName() + " at "
-                    + mmDevice.getAddress() + " failed:" + ex.getMessage());}
+                    + mmDevice.getAddress() + " failed:" + ex.getMessage());
+            }
+        if(!mac_address.equals("none"))
+            return "Still connected";
+        else
             return "couldn't connect";
     }
-
 
     private void findBT()
     {
@@ -105,7 +126,7 @@ public class BluetoothConnection{
         mmSocket = mmDevice.createRfcommSocketToServiceRecord(uuid);
         Log.i("TAG", "before");
         mmSocket.connect();
-        Log.i("TAG", "after");
+        Log.i("TAG", "connected");
         mmOutputStream = mmSocket.getOutputStream();
         mmInputStream = mmSocket.getInputStream();
 

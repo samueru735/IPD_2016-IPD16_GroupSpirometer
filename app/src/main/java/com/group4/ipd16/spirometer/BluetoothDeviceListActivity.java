@@ -1,5 +1,4 @@
 package com.group4.ipd16.spirometer;
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -41,7 +40,7 @@ public class BluetoothDeviceListActivity extends BaseActivity {
         tvInfoText = (TextView) findViewById(R.id.tvInfoText);
 
         // Initialize array adapter for paired devices
-        mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
+        mPairedDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.device_name);
 
         // Find and set up the ListView for paired devices
         lvPairedListView = (ListView) findViewById(R.id.lvPaired_devices);
@@ -54,7 +53,6 @@ public class BluetoothDeviceListActivity extends BaseActivity {
                 startActivityForResult(settingsIntent, 1);
             }
         });
-
     }
 
     @Override
