@@ -28,4 +28,14 @@
     <string name="title_activity_register">Register</string>
     <string name="btnSendMail">send mail</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="tvFirstName">First name</string>
+    <string name="tvLastName">Last name</string>
+    <string name="tvDoctorEmail">Doctor email</string>
+    <string name="emailExample">example@emailprovider.com</string>
+    <string name="weightFormat">kg</string>
+    <string name="heightFormat">cm</string>
+    <string name="ageFormat">years</string>
+    <string name="tvEthnicity">Ethnicity</string>
+    <string name="btnSaveProfile">Save profile</string>
+    <string name="btnDeleteProfile">Delete profile</string>
 </resources>
