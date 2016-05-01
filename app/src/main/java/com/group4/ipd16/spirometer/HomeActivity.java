@@ -2,6 +2,8 @@ package com.group4.ipd16.spirometer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +23,7 @@ public class HomeActivity extends BaseActivity {
     private String mac_address, userName;
     private BluetoothConnection btConn;
     private TextView tvResult, tvSentData, tvConnStatus, tvWelcome;
+    private double incomingData, previousIncomingData;
     private List<Float> listResult;
     private String userID;
 
@@ -72,12 +75,11 @@ public class HomeActivity extends BaseActivity {
         btnSendStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     btConn.sendData("start");
                     btnStartResultActivity.setVisibility(View.VISIBLE);
                     //startActivity(resultIntent);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     Log.e("TAG", e.toString());
                 }
             }
@@ -93,8 +95,8 @@ public class HomeActivity extends BaseActivity {
                 }
                 Bundle b = new Bundle();
                 float[] results = btConn.getListResults();
-                double[]resultsDouble = new double[results.length];
-                for ( int i = 0; i < resultsDouble.length; i++ ){
+                double[] resultsDouble = new double[results.length];
+                for (int i = 0; i < resultsDouble.length; i++) {
                     resultsDouble[i] = MyMath.round((double) results[i], 2);
                 }
                 Log.i("TAG", Arrays.toString(resultsDouble));
@@ -105,8 +107,25 @@ public class HomeActivity extends BaseActivity {
                 startActivity(i);
             }
         });
-    }
 
+        tvResult.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.i("TAG", "Incoming data: " + s);
+            }
+        });
+
+    }
 
     @Override
     public void onResume(){
@@ -131,9 +150,7 @@ public class HomeActivity extends BaseActivity {
             btConn.SentData(tvSentData);
             if(mac_address != null)
                 btConn.setMacAddress(mac_address);
-            tvConnStatus.setText("Connectionstatus: " + btConn.Connect());
-
-
+        tvConnStatus.setText("Connectionstatus: " + btConn.Connect());
     }
 
     protected void openActivity(int position){
@@ -168,4 +185,6 @@ public class HomeActivity extends BaseActivity {
 
         Toast.makeText(this, "Selected Item Position::" + position, Toast.LENGTH_LONG).show();
     }
+
+
 }

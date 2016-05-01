@@ -1,14 +1,12 @@
 package com.group4.ipd16.spirometer;
 
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
@@ -79,7 +77,6 @@ public class TestActivity extends BaseActivity {
                                         } catch (InterruptedException e) {
                                             e.printStackTrace();
                                         }
-
                                     }
                                 }
                             });
@@ -128,5 +125,4 @@ public class TestActivity extends BaseActivity {
         // here, we choose to display max 10 points on the viewport and we scroll to end
         series.appendData(new DataPoint(lastX++, RANDOM.nextDouble() * 10d), true, 10);
     }
-
 }

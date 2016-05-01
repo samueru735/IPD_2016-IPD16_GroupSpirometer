@@ -226,5 +226,5 @@ public class BluetoothConnection{
             mmSocket.close();
         Log.i("TAG","Bluetooth Closed");
     }
-    
+
 }
