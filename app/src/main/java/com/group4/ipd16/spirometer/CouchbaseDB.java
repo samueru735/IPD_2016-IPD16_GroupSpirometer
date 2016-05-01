@@ -50,7 +50,6 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
             return spriroDB;
         else {
             return new CouchbaseDB();
-            //return new CouchbaseDB(ProfileActivity.this);
         }
     }
 
@@ -78,7 +77,6 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
                 QueryRow row = it.next();
                 Log.i(TAG, String.valueOf(row.getDocument().getProperties()));
             }
-
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
         }
@@ -91,6 +89,9 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
     }
     public User getCurrentUser(){
         return currentUser;
+    }
+    public String getUserID(){
+        return userId;
     }
     public User getUserById(String userId){
         Log.i(TAG, "user id: " + userId);
@@ -141,14 +142,13 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
         List<String> users = new ArrayList<String>();
         Query query = database.createAllDocumentsQuery();
         query.setAllDocsMode(Query.AllDocsMode.ALL_DOCS);
-
-
         try {
             QueryEnumerator result = query.run();
             for (Iterator<QueryRow> it = result; it.hasNext();){
                 QueryRow row = it.next();
                 Document doc = row.getDocument();
                 Log.i(TAG, String.valueOf(row.getDocument().getProperties()));
+                // check for 'empty' users
                 if(String.valueOf(row.getDocument().getProperty("first_name")) == "" )
                     row.getDocument().delete();
                 else{
@@ -156,7 +156,6 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
                     getUserById(doc.getId());
                 }
             }
-
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
             return null;

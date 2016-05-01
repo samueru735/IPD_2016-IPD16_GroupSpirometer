@@ -15,10 +15,14 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class ResultsActivity extends BaseActivity {
     BluetoothConnection btConn;
@@ -66,7 +70,7 @@ public class ResultsActivity extends BaseActivity {
         btnSaveResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SaveResults();
             }
         });
 
@@ -75,6 +79,16 @@ public class ResultsActivity extends BaseActivity {
         fvc = MyMath.FVC(listResults);
         fvc = MyMath.round(fvc,2);
         tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
+
+    }
+
+    private void SaveResults() {
+        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
+        data.put("data", listResults);
+        data.put("fvc", fvc);
+        resultMap.put("res_id_" + DateFormat.getDateTimeInstance().format(new Date()), data);
+        CouchbaseDB.getSpiroDB().updateDoc(CouchbaseDB.getSpiroDB().getUserID(), resultMap);
     }
 
     private void DrawGraph() {
