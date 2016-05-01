@@ -1,5 +1,7 @@
 package com.group4.ipd16.spirometer;
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.List;
  * Created by Samuel on 11/04/2016.
  */
 public class MyMath {
-    private static double FILTER = 0.03;
+    private static double FILTER = 0.30;
 
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -26,6 +28,7 @@ public class MyMath {
                 listResults.remove(i);
             }
         }
+        Log.i("TAG", "Filtered list: " +listResults.toString());
         return listResults;
     }
 
@@ -34,7 +37,7 @@ public class MyMath {
         int indexEnd = listResults.size() - 1;
 
         for(int i = 1; i < listResults.size(); i++){
-            if(listResults.get(i) > 0.50 && listResults.get(i) >= listResults.get(i-1) + 0.50 ){
+            if(indexStart == -1 && listResults.get(i) > 0.50 && listResults.get(i) >= listResults.get(i-2) + 0.50 ){
                 indexStart = i - 2;
             }
             if(indexStart >= 0 && listResults.get(i) <= 0.3 ){
@@ -54,7 +57,7 @@ public class MyMath {
 
     public static Double FVC(List<Double>listResults) { // time between results: 10 ms
         double fvc = 0;
-        int delay = 50; //ms
+        int delay = 10; //ms
 
         List<Double> intermediaryResults = new ArrayList<Double>();
         for ( int i = 0; i < listResults.size(); i++){

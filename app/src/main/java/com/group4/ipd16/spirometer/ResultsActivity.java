@@ -27,7 +27,7 @@ public class ResultsActivity extends BaseActivity {
     private double[] resultsArray;
     private double fvc;
     private List<Double> listResults = new ArrayList<Double>();
-    private Button btnSendMail;
+    private Button btnSendMail, btnSaveResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,27 +45,35 @@ public class ResultsActivity extends BaseActivity {
         catch (Exception e){
             e.printStackTrace();
         }
+        Log.i("TAG", "Current user in results: " + CouchbaseDB.getSpiroDB().getCurrentUser().getFirst_name());
         listResults = MyMath.FilterZeroResults(listResults);
-
 
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         btnSendMail = (Button)findViewById(R.id.btnSendMail);
+        btnSaveResults = (Button) findViewById(R.id.btnSaveResults);
 
         btnSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ResultsActivity.this, ShareActivity.class);
-                i.putExtra("results", ArrayUtils.toDoubleArray(listResults));
+                        i.putExtra("results", ArrayUtils.toDoubleArray(listResults));
                 i.putExtra("fvc", fvc);
                 startActivity(i);
+            }
+        });
+        btnSaveResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
         DrawGraph();
         listResults = MyMath.FilterExpiration(listResults);
         fvc = MyMath.FVC(listResults);
+        fvc = MyMath.round(fvc,2);
         tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
     }
 
