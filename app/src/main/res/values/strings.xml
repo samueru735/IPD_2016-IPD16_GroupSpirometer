@@ -38,4 +38,8 @@
     <string name="tvEthnicity">Ethnicity</string>
     <string name="btnSaveProfile">Save profile</string>
     <string name="btnDeleteProfile">Delete profile</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="btnRegister">Register</string>
+    <string name="confirmPassword">Confirm password</string>
+    <string name="password">Password</string>
 </resources>

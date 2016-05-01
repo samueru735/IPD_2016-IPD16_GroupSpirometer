@@ -34,11 +34,8 @@ public class LoginActivity extends BaseActivity {
         spiroDB = new CouchbaseDB();
         spiroDB.setContext(context);
         spiroDB = CouchbaseDB.getSpiroDB();
-
         spiroDB.setUpCouchbaseLiteDB();
         addUsersToSpinner();
-
-
 
         /*login */
         //user = (EditText)findViewById(R.id.usertext);
@@ -73,14 +70,6 @@ public class LoginActivity extends BaseActivity {
                         startActivity(i);
                         break;
                 }
-
-                /*if(user.toString() == "admin" && password.toString()== "123") {
-                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i);
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
-                }*/
             }
         });
     }
@@ -101,13 +90,6 @@ public class LoginActivity extends BaseActivity {
         catch (Exception ex){
             LoginActivity.this.deleteDatabase("userInfo");
         }
-
-        /*if(users != null ){
-            for (String user : userList) {
-                userList.add(user);
-            }
-        } */
-
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

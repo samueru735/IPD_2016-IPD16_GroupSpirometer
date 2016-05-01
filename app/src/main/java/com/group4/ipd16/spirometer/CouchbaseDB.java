@@ -108,7 +108,19 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
         }
     }
     public void cleanDB(){
-
+        Query query = database.createAllDocumentsQuery();
+        query.setAllDocsMode(Query.AllDocsMode.ALL_DOCS);
+        try {
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext();){
+                QueryRow row = it.next();
+                Document doc = row.getDocument();
+                if(String.valueOf(doc.getProperty("first_name")).equals(""))
+                    doc.delete();
+            }
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void CreateDocument(Map<String, Object> userMap){
@@ -137,8 +149,12 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
                 QueryRow row = it.next();
                 Document doc = row.getDocument();
                 Log.i(TAG, String.valueOf(row.getDocument().getProperties()));
-                users.add(String.valueOf(row.getDocument().getProperty("first_name")) + " " + String.valueOf(row.getDocument().getProperty("last_name")));
-                getUserById(doc.getId());
+                if(String.valueOf(row.getDocument().getProperty("first_name")) == "" )
+                    row.getDocument().delete();
+                else{
+                    users.add(String.valueOf(row.getDocument().getProperty("first_name")) + " " + String.valueOf(row.getDocument().getProperty("last_name")));
+                    getUserById(doc.getId());
+                }
             }
 
         } catch (CouchbaseLiteException e) {
@@ -208,7 +224,7 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
        // Iterate through the rows to get the document ids
             for (Iterator<QueryRow> it = results; it.hasNext();) {
                 QueryRow row = it.next();
-                String docId = (String) row.getSourceDocumentId();
+                String docId = row.getSourceDocumentId();
                 Log.i(TAG, "DocID: " + docId);
                 Log.i(TAG, "Given password: " + password);
                 try{
