@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.couchbase.lite.CouchbaseLiteException;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
@@ -88,7 +90,14 @@ public class ResultsActivity extends BaseActivity {
         data.put("data", listResults);
         data.put("fvc", fvc);
         resultMap.put("res_id_" + DateFormat.getDateTimeInstance().format(new Date()), data);
-        CouchbaseDB.getSpiroDB().updateDoc(CouchbaseDB.getSpiroDB().getUserID(), resultMap);
+        try{
+            CouchbaseDB.getSpiroDB().updateDoc(CouchbaseDB.getSpiroDB().getUserID(), resultMap);
+            Toast.makeText(ResultsActivity.this, "Results saved", Toast.LENGTH_LONG).show();
+        }
+        catch (Exception e){
+            Log.e("TAG", "Error saving results",e);
+        }
+
     }
 
     private void DrawGraph() {
