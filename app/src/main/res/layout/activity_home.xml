@@ -17,9 +17,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/imageView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_weight="1" />
 
         <TextView
@@ -28,11 +25,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Spirometer App"
             android:id="@+id/HomeTitle"
-            android:layout_alignTop="@+id/imageView"
-            android:layout_toRightOf="@+id/imageView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/imageView"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold|italic"
             android:textSize="35dp"
@@ -92,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:text="Show result"
                 android:id="@+id/btnShowResultActivity"
+                android:visibility="gone"
                />
         </LinearLayout>
 
