@@ -30,9 +30,7 @@ public class BluetoothConnection{
     private Thread workerThread;
     private byte[] readBuffer;
     private int readBufferPosition;
-    private int counter;        // can be used later
     private volatile boolean stopWorker;
-    //private String mac_address;
     private Intent intent;
     private TextView tvConnectInfo;
     private TextView result, sentdata;
@@ -55,7 +53,6 @@ public class BluetoothConnection{
             mIstance = new BluetoothConnection();
         return mIstance;
     }
-
 
     public void SentData(TextView sentdata) {
         this.sentdata = sentdata;
@@ -177,7 +174,8 @@ public class BluetoothConnection{
                                             }
                                             //String dataString = data.toString();
                                            // String testData = dataString.trim();
-                                            result.setText(listResults.toString());
+                                            //result.setText(listResults.toString());
+                                            result.setText(data.toString());
                                             Log.i("TAG", "data received");
                                         }
                                     });
@@ -196,7 +194,6 @@ public class BluetoothConnection{
                 }
             }
         });
-
         workerThread.start();
     }
 
@@ -226,5 +223,4 @@ public class BluetoothConnection{
             mmSocket.close();
         Log.i("TAG","Bluetooth Closed");
     }
-
 }
