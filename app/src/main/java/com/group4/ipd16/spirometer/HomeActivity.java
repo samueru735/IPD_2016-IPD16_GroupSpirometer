@@ -130,6 +130,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onResume(){
         super.onResume();
+        listResult.clear();
         try{
             //Log.i("TAG", "Mac address: " + mac_address);
            Intent i = getIntent();

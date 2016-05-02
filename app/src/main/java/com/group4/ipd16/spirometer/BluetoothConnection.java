@@ -201,30 +201,26 @@ public class BluetoothConnection{
         workerThread.start();
     }
 
-    void sendData(String command) throws IOException
-    {
+    void sendData(String command) throws IOException {
         String msg = command;
-        if(msg.equals("x"))
-        {
+        if (msg.equals("x")) {
             Log.i("TAG", "STOP!");
-            workerThread = new Thread(new Runnable() {
+            new Thread(new Runnable() {
                 public void run() {
-                    while (!Thread.currentThread().isInterrupted() && !stopWorker) {
-                        try {
-                            mmOutputStream.write(("xxx" + "\n").getBytes());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    try {
+                        mmOutputStream.write(("xxx" + "\n").getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             });
-        }
-        msg += "\n";
+        } else {
 
-        mmOutputStream.write(msg.getBytes());
-
-        sentdata.setText("data sent: " + msg);
-        Log.i("TAG", "Sent data: " + msg);
+                msg += "\n";
+                mmOutputStream.write(msg.getBytes());
+                sentdata.setText("data sent: " + msg);
+                Log.i("TAG", "Sent data: " + msg);
+            }
     }
 
     void closeBT() throws IOException
