@@ -76,7 +76,7 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    btConn.sendData("start");
+                    btConn.sendData("s");
                     btnStartResultActivity.setVisibility(View.VISIBLE);
                     //startActivity(resultIntent);
                 } catch (Exception e) {

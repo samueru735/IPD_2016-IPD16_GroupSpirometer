@@ -28,7 +28,7 @@ public class MyMath {
                 listResults.remove(i);
             }
         }
-        Log.i("TAG", "Filtered list: " +listResults.toString());
+        Log.i("TAG", "Filtered list: " + listResults.toString());
         return listResults;
     }
 
@@ -50,7 +50,12 @@ public class MyMath {
             }
         }
         listResults.subList(indexEnd, listResults.size()).clear();
-        listResults.subList(0, indexStart).clear();
+        try{
+            listResults.subList(0, indexStart).clear();
+        }
+        catch (Exception e){
+            Log.i("TAG", "Bad results, try again",e);
+        }
 
         return listResults;
     }

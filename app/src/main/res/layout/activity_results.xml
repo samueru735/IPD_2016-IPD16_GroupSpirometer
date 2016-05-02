@@ -37,6 +37,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/btnRetry"
+        android:id="@+id/btnRetry"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/btnSaveResults"
         android:id="@+id/btnSaveResults"
         />

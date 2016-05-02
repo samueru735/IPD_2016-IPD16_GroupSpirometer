@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.couchbase.lite.CouchbaseLiteException;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
@@ -33,7 +32,7 @@ public class ResultsActivity extends BaseActivity {
     private double[] resultsArray;
     private double fvc;
     private List<Double> listResults = new ArrayList<Double>();
-    private Button btnSendMail, btnSaveResults;
+    private Button btnSendMail, btnSaveResults, btnRetry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +51,14 @@ public class ResultsActivity extends BaseActivity {
             e.printStackTrace();
         }
         Log.i("TAG", "Current user in results: " + CouchbaseDB.getSpiroDB().getCurrentUser().getFirst_name());
-        listResults = MyMath.FilterZeroResults(listResults);
+
 
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         btnSendMail = (Button)findViewById(R.id.btnSendMail);
         btnSaveResults = (Button) findViewById(R.id.btnSaveResults);
+        btnRetry = (Button)findViewById(R.id.btnRetry);
 
         btnSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,12 +76,23 @@ public class ResultsActivity extends BaseActivity {
             }
         });
 
+        btnRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoBackToHome();
+            }
+        });
+
         DrawGraph();
+        listResults = MyMath.FilterZeroResults(listResults);
         listResults = MyMath.FilterExpiration(listResults);
         fvc = MyMath.FVC(listResults);
         fvc = MyMath.round(fvc,2);
         tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
+    }
 
+    private void GoBackToHome() {
+        startActivity(new Intent(this, HomeActivity.class));
     }
 
     private void SaveResults() {
@@ -95,7 +106,7 @@ public class ResultsActivity extends BaseActivity {
             Toast.makeText(ResultsActivity.this, "Results saved", Toast.LENGTH_LONG).show();
         }
         catch (Exception e){
-            Log.e("TAG", "Error saving results",e);
+            Log.e("TAG", "Error saving results", e);
         }
 
     }

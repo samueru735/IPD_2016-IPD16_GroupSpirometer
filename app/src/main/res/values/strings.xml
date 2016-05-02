@@ -42,5 +42,8 @@
     <string name="btnRegister">Register</string>
     <string name="confirmPassword">Confirm password</string>
     <string name="password">Password</string>
+
+    // result activity
     <string name="btnSaveResults">Save results</string>
+    <string name="btnRetry">Retry</string>
 </resources>

@@ -39,6 +39,7 @@ public class BluetoothConnection{
     private static BluetoothConnection mIstance = null;
 
     private String mac_address;
+    private boolean stop = false;
 
     private BluetoothConnection(){
         mac_address = "none";
@@ -168,6 +169,9 @@ public class BluetoothConnection{
                                             try {
                                                 Log.i("TAG", "trying");
                                                 listResults.add(Float.parseFloat(data.toString()));
+                                                //if(stop == true){
+                                                 //   mmOutputStream.write(("x").getBytes());
+                                               // }
                                             }
                                             catch (Exception e){
                                                 e.printStackTrace();
@@ -197,24 +201,36 @@ public class BluetoothConnection{
         workerThread.start();
     }
 
-    void sendData() throws IOException
-    {
-        String msg = myTextbox.getText().toString();
-        msg += "\n";
-        mmOutputStream.write(msg.getBytes());
-        sentdata.setText("data sent: " + msg);
-    }
     void sendData(String command) throws IOException
     {
         String msg = command;
+        if(msg.equals("x"))
+        {
+            Log.i("TAG", "STOP!");
+            workerThread = new Thread(new Runnable() {
+                public void run() {
+                    while (!Thread.currentThread().isInterrupted() && !stopWorker) {
+                        try {
+                            mmOutputStream.write(("xxx" + "\n").getBytes());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
         msg += "\n";
+
         mmOutputStream.write(msg.getBytes());
+
         sentdata.setText("data sent: " + msg);
+        Log.i("TAG", "Sent data: " + msg);
     }
 
     void closeBT() throws IOException
     {
         stopWorker = true;
+        mmOutputStream.write(("xxx" + "\n").getBytes());
         if(mmOutputStream != null)
             mmOutputStream.close();
         if(mmInputStream != null)
