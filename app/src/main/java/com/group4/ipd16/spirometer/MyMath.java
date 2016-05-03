@@ -38,7 +38,8 @@ public class MyMath {
 
         for(int i = 1; i < listResults.size(); i++){
             if(indexStart == -1 && listResults.get(i) > 0.50 && listResults.get(i) >= listResults.get(i-2) + 0.50 ){
-                indexStart = i - 2;
+                if(i >= 2)
+                    indexStart = i - 2;
             }
             if(indexStart >= 0 && listResults.get(i) <= 0.3 ){
                 if( i < indexEnd){
@@ -50,11 +51,11 @@ public class MyMath {
             }
         }
         try{
-            listResults.subList(indexEnd, listResults.size()).clear();
+            listResults.subList(indexEnd, listResults.size()-1).clear();
         }
         catch (ArrayIndexOutOfBoundsException e){
             try{
-                listResults.subList(indexEnd--, listResults.size()).clear();
+                listResults.subList(indexEnd--, listResults.size()-1).clear();
             }
             catch (Exception ex){
                 ex.printStackTrace();
