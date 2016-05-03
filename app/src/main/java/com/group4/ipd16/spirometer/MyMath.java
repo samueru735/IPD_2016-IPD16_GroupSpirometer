@@ -43,13 +43,24 @@ public class MyMath {
             if(indexStart >= 0 && listResults.get(i) <= 0.3 ){
                 if( i < indexEnd){
                     if(listResults.get(i+1) < 0.2){
-                        indexEnd = i + 1;
+                        indexEnd = i;
                         i = listResults.size();
                     }
                 }
             }
         }
-        listResults.subList(indexEnd, listResults.size()).clear();
+        try{
+            listResults.subList(indexEnd, listResults.size()).clear();
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            try{
+                listResults.subList(indexEnd--, listResults.size()).clear();
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+
         try{
             listResults.subList(0, indexStart).clear();
         }
