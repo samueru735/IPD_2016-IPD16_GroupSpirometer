@@ -51,7 +51,7 @@ public class MyMath {
             }
         }
         try{
-            listResults.subList(indexEnd, listResults.size()-1).clear();
+            listResults.subList(indexEnd, listResults.size()).clear();
         }
         catch (ArrayIndexOutOfBoundsException e){
             try{
