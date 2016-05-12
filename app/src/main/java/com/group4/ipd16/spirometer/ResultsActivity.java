@@ -139,7 +139,7 @@ public class ResultsActivity extends BaseActivity {
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
         series.setDrawDataPoints(true);
-        series.setDataPointsRadius(10);
+        series.setDataPointsRadius(1);
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
