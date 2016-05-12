@@ -83,6 +83,7 @@ public class ResultsActivity extends BaseActivity {
             }
         });
 
+        listResults = MyMath.FilterPeakResults(listResults);
         DrawGraph();
         listResults = MyMath.FilterZeroResults(listResults);
         listResults = MyMath.FilterExpiration(listResults);

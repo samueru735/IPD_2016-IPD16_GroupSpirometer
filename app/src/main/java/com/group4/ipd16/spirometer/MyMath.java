@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class MyMath {
     private static double FILTER = 0.30;
+    private static double PEAK_FILTER = 12.00;
 
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -29,6 +30,15 @@ public class MyMath {
             }
         }
         Log.i("TAG", "Filtered list: " + listResults.toString());
+        return listResults;
+    }
+
+    public static List<Double> FilterPeakResults(List<Double> listResults){
+        for ( int i = listResults.size()-1; i >= 0; i --){
+            if(listResults.get(i) > PEAK_FILTER){
+                listResults.remove(i);
+            }
+        }
         return listResults;
     }
 
@@ -51,9 +61,9 @@ public class MyMath {
             }
         }
         try{
-            listResults.subList(indexEnd, listResults.size()).clear();
+            listResults.subList(indexEnd, listResults.size()-1).clear();
         }
-        catch (ArrayIndexOutOfBoundsException e){
+        catch (IndexOutOfBoundsException e){
             try{
                 listResults.subList(indexEnd--, listResults.size()-1).clear();
             }
