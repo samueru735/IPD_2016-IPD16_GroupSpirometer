@@ -3,6 +3,7 @@ package com.group4.ipd16.spirometer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -67,6 +68,12 @@ public class LoginActivity extends BaseActivity {
                         Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                         i.putExtra("user_id", userID);
                         i.putExtra("userName", String.valueOf(userSpinner.getSelectedItem()));
+                        try{
+                            Log.i("TAG" ,"FVC for this user: "+ spiroDB.getFvcFromId(userID));
+                        }
+                        catch (NullPointerException e){
+                            Log.e("TAG", "No fvc results yet" );
+                        }
                         startActivity(i);
                         break;
                 }

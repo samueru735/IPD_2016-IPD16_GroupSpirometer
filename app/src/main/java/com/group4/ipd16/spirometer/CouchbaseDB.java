@@ -124,6 +124,15 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
         }
     }
 
+    public String getFvcFromId(String userId){
+        Document doc = database.getDocument(userId);
+        Map<String, Object> properties =  doc.getProperties();
+        Log.i("TAG", "Properties: " + properties);
+        String fvc = (String) properties.get("fvc");
+        Log.i("TAG", "FVC: " + fvc);
+        return fvc;
+    }
+
     protected void CreateDocument(Map<String, Object> userMap){
         // create new document and add data
         Document document = database.createDocument();
