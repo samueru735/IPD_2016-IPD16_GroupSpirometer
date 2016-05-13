@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.DefaultLabelFormatter;
@@ -28,12 +32,33 @@ import java.util.Random;
 
 
 public class HistoryActivity extends BaseActivity {
+
+    public ListView list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_history);
         getLayoutInflater().inflate(R.layout.activity_history, frameLayout);
         drawerList.setItemChecked(position, true);
+
+        list = (ListView)findViewById(R.id.listDates);
+
+        String[] testDates = new String[]{"10 Jan 2016", "3 Okt 2015", "12 Sept 2013"};
+
+        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, testDates);
+
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int itemPosition = position;
+                String itemValue = (String)list.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), "position" + itemPosition + "Listitem" + itemValue, Toast.LENGTH_LONG).show();
+
+            }
+        });
 
         GraphView bar_graph = (GraphView)findViewById(R.id.graph);
         BarGraphSeries<DataPoint> bar_series = new BarGraphSeries<DataPoint>(new DataPoint[]{
@@ -66,6 +91,8 @@ public class HistoryActivity extends BaseActivity {
         bar_graph.getViewport().setXAxisBoundsManual(true);
         bar_graph.getViewport().setMinX(0.5);
         bar_graph.getViewport().setMaxX(3.5);
+        bar_graph.getViewport().setScrollable(true);
+        bar_graph.getViewport().scrollToEnd();
         // tap info
         bar_series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
