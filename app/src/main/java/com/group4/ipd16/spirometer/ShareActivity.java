@@ -18,9 +18,9 @@ public class ShareActivity extends BaseActivity {
     private Button btnTestMail;
     private User user;
     private double[] arrayResults;
-    private double fvc;
+    private double fvc, fev1;
     private Calendar cal;
-    String currentDateTime;
+    private String currentDateTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +31,16 @@ public class ShareActivity extends BaseActivity {
         Intent i = getIntent();
         arrayResults = i.getDoubleArrayExtra("results");
         fvc = i.getDoubleExtra("fvc", 0.00);
+        fev1 = i.getDoubleExtra("fev1", 0.00);
         currentDateTime = DateFormat.getDateTimeInstance().format(new Date());
-
+        user = CouchbaseDB.getSpiroDB().getCurrentUser();
         sendMail();
     }
 
     protected void sendMail() {
         Log.i("Send email", "");
 
-        String[] TO = {"doctorPlastic@gmail.com"}; // user.getEmailDoctor
+        String[] TO = {user.getDoctor_email()}; // user.getEmailDoctor
         //String[] CC = {"doctorPlastic@gmail.com"};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
@@ -51,11 +52,13 @@ public class ShareActivity extends BaseActivity {
         sbMessage.append("\n");
         sbMessage.append("FVC: " + fvc);
         sbMessage.append("\n");
+        sbMessage.append("FEV1: " + fev1);
+        sbMessage.append("\n");
         sbMessage.append(Arrays.toString(arrayResults));
 
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         //emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Results for " + "Samuel" /*user.getFirst_name()*/ + " " + "Baudez" /*user.getLast_name()*/);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Results for " + user.getFirst_name() + " " + user.getLast_name());
         emailIntent.putExtra(Intent.EXTRA_TEXT, (CharSequence) sbMessage);
 
         try {
