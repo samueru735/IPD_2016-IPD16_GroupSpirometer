@@ -19,10 +19,10 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ResultsActivity extends BaseActivity {
     Intent intent;
     private TextView tvResult, tvSentData, tvConnStatus;
     private double[] resultsArray;
-    private double fvc;
+    private double fvc, fev1;
     private List<Double> listResults = new ArrayList<Double>();
     private Button btnSendMail, btnSaveResults, btnRetry;
 
@@ -67,8 +67,9 @@ public class ResultsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ResultsActivity.this, ShareActivity.class);
-                        i.putExtra("results", ArrayUtils.toDoubleArray(listResults));
+                i.putExtra("results", ArrayUtils.toDoubleArray(listResults));
                 i.putExtra("fvc", fvc);
+                i.putExtra("fev1", fev1);
                 startActivity(i);
             }
         });
@@ -90,9 +91,11 @@ public class ResultsActivity extends BaseActivity {
         DrawGraph();
         listResults = MyMath.FilterZeroResults(listResults);
         listResults = MyMath.FilterExpiration(listResults);
+        fev1 = MyMath.FEV1(listResults);
+        fev1 = MyMath.round(fev1,2);
         fvc = MyMath.FVC(listResults);
         fvc = MyMath.round(fvc,2);
-        tvResult.setText("FVC = " + fvc); //Arrays.toString(resultsArray));
+        tvResult.setText("FVC = " + fvc + "FEV1 = " + fev1); //Arrays.toString(resultsArray));
     }
 
     private void GoBackToHome() {
@@ -102,11 +105,22 @@ public class ResultsActivity extends BaseActivity {
     private void SaveResults() {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> data = new HashMap<>();
+        Calendar c = Calendar.getInstance();
+        Log.i("TAG","Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c.getTime());
+        data.put("date", formattedDate);
         data.put("data", listResults);
         data.put("fvc", fvc);
-        resultMap.put("res_id_" + DateFormat.getDateTimeInstance().format(new Date()), data);
+        data.put("fev1", fev1);
+        data.put("user_id", CouchbaseDB.getSpiroDB().getUserID());
+
+        //resultMap.put("res_id_" + DateFormat.getDateTimeInstance().format(new Date()), data);
+        //resultMap.put("result", data);
         try{
-            CouchbaseDB.getSpiroDB().updateDoc(CouchbaseDB.getSpiroDB().getUserID(), resultMap);
+            //CouchbaseDB.getSpiroDB().updateResults(CouchbaseDB.getSpiroDB().getUserID(), resultMap);
+            CouchbaseDB.getSpiroDB().CreateDocument(data);
             Toast.makeText(ResultsActivity.this, "Results saved", Toast.LENGTH_LONG).show();
         }
         catch (Exception e){
@@ -131,7 +145,6 @@ public class ResultsActivity extends BaseActivity {
        // staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "2", "3", "4", "5", "6", "7", "8", "9", "10", " ", "SEC."});
        // staticLabelsFormatter.setVerticalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "LITER"});
        // graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
 
         series.setTitle("(FVC, forced vital capacity) in L/s");
 
