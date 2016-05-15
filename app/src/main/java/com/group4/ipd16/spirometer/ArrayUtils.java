@@ -167,7 +167,7 @@ public class ArrayUtils
         for (Float f : lf) {
             results[i++] = (f != null ? f : 0);
         }
-        Log.i("TAG", "bt_results " + Arrays.toString(results));
+        Log.i("TAG", "float conversion results " + Arrays.toString(results));
         return results;
     }
 
@@ -177,7 +177,16 @@ public class ArrayUtils
         for (Double d : ld) {
             results[i++] = (d != null ? d : 0);
         }
-        Log.i("TAG", "bt_results " + Arrays.toString(results));
+        Log.i("TAG", "double conversion results " + Arrays.toString(results));
+        return results;
+    }
+    public static String[] toStringArray(List<String> ls){
+        String[] results = new String[ls.size()];
+        int i = 0;
+        for (String s : ls) {
+            results[i++] = (s != null ? s : "");
+        }
+        Log.i("TAG", "string conversion results " + Arrays.toString(results));
         return results;
     }
 }
