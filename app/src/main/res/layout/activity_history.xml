@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,38 +7,43 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.num.graphview.MainActivity"
-    android:orientation="vertical">
+    tools:context="app.num.graphview.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvLegendY"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="Y = FVC"
+        android:textSize="16dp"
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:id="@+id/tvLegendX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X = day of month"
+        android:textSize="16dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toEndOf="@+id/tvLegendY"/>
+    <TextView
+        android:id="@+id/tvPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toEndOf="@+id/tvLegendX"/>
 
-        <TextView
-            android:id="@+id/bartext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HISTORY"
-            android:textSize="16dp"
-            android:layout_marginBottom="20dp"/>
-
-        <com.jjoe64.graphview.GraphView
-            android:layout_width="match_parent"
-            android:layout_height="200dip"
-            android:title="Graph Title"
-            android:id="@+id/graph"
-            android:layout_below="@+id/bartext"/>
-    </LinearLayout>
-    <LinearLayout
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:title="Graph Title"
+        android:id="@+id/graph"
+        android:layout_below="@+id/tvLegendY"/>
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="0mm"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/listDates"/>
-    </LinearLayout>
-</LinearLayout>
+        android:id="@+id/lvResults"
+        android:layout_below="@+id/graph">
+
+    </ListView>
+
+</RelativeLayout>

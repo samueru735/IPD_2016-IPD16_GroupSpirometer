@@ -167,7 +167,7 @@ public class BluetoothConnection{
                                         public void run()
                                         {
                                             try {
-                                                Log.i("TAG", "trying");
+                                           //     Log.i("TAG", "trying");
                                                 listResults.add(Float.parseFloat(data.toString()));
                                                 //if(stop == true){
                                                  //   mmOutputStream.write(("x").getBytes());
@@ -180,7 +180,7 @@ public class BluetoothConnection{
                                            // String testData = dataString.trim();
                                             //result.setText(listResults.toString());
                                             result.setText(data.toString());
-                                            Log.i("TAG", "data received");
+                                           // Log.i("TAG", "data received");
                                         }
                                     });
                                 }
