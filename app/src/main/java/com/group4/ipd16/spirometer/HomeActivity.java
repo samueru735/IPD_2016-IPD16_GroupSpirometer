@@ -42,7 +42,7 @@ public class HomeActivity extends BaseActivity {
         test = (Button)findViewById(R.id.testKNOP);
 
         Intent i = getIntent();
-        userName = i.getStringExtra("userName");
+        //userName = i.getStringExtra("userName");
         userID = i.getStringExtra("user_id");
         listResult = new ArrayList<>();
         btnStartBluetooth = (Button)findViewById(R.id.btnStartBluetooth);
@@ -51,7 +51,6 @@ public class HomeActivity extends BaseActivity {
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
         tvWelcome = (TextView)findViewById(R.id.tvWelcome);
-        tvWelcome.setText("Welcome " + userName);
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
         resultIntent = new Intent(this, ResultsActivity.class);
@@ -131,6 +130,8 @@ public class HomeActivity extends BaseActivity {
     public void onResume(){
         super.onResume();
         listResult.clear();
+        userName = CouchbaseDB.getSpiroDB().getCurrentUser().getFirst_name();
+        tvWelcome.setText("Welcome " + userName);
         try{
             //Log.i("TAG", "Mac address: " + mac_address);
            Intent i = getIntent();
