@@ -99,4 +99,15 @@ public class MyMath {
 
         return fvc;
     }
+    public static Double FEV1(List<Double>listResults) { // time between results: 10 ms
+        double fev1 = 0;
+        int delay = 10; //ms
+        int oneSecond = 1000;
+
+        for ( int i = 0; i < oneSecond/delay; i++){
+            fev1+= listResults.get(i)*delay;
+        }
+        fev1 /= oneSecond;
+        return fev1;
+    }
 }
