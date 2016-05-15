@@ -55,27 +55,33 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String userID = CouchbaseDB.getSpiroDB().login(userSpinner.getSelectedItem().toString(), password.getText().toString());
-                switch (userID) {
-                    case "Access denied":
-                        Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "":
-                        Toast.makeText(LoginActivity.this, "User does not exist...", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(LoginActivity.this, "Logging in with uId " + userID, Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                        i.putExtra("user_id", userID);
-                        i.putExtra("userName", String.valueOf(userSpinner.getSelectedItem()));
-                        try{
-                            Log.i("TAG" ,"FVC for this user: "+ spiroDB.getFvcFromId(userID));
-                        }
-                        catch (NullPointerException e){
-                            Log.e("TAG", "No fvc results yet" );
-                        }
-                        startActivity(i);
-                        break;
+                if(userID == null){
+                    Toast.makeText(LoginActivity.this, "No password...", Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    switch (userID) {
+                        case "Access denied":
+                            Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
+                            break;
+                        case "":
+                            Toast.makeText(LoginActivity.this, "User does not exist...", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(LoginActivity.this, "Logging in with uId " + userID, Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                            i.putExtra("user_id", userID);
+                            i.putExtra("userName", String.valueOf(userSpinner.getSelectedItem()));
+                            try{
+                                Log.i("TAG" ,"FVC for this user: "+ spiroDB.getFvcFromId(userID));
+                            }
+                            catch (NullPointerException e){
+                                Log.e("TAG", "No fvc results yet" );
+                            }
+                            startActivity(i);
+                            break;
+                    }
+                }
+
             }
         });
     }

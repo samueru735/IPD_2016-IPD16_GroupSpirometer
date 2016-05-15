@@ -157,6 +157,7 @@ public class CouchbaseDB  {
             }
         } catch (CouchbaseLiteException e) {
             Log.e("ERROR", "Error retrieving results", e);
+            return null;
         }
         return resultList;
     }
