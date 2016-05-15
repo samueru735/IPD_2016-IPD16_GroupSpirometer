@@ -157,7 +157,6 @@ public class CouchbaseDB  {
             }
         } catch (CouchbaseLiteException e) {
             Log.e("ERROR", "Error retrieving results", e);
-            return null;
         }
         return resultList;
     }
@@ -313,7 +312,7 @@ public class CouchbaseDB  {
                     }
                 }
                 catch (Exception e){
-                    row.getDocument().delete();
+                    //row.getDocument().delete();
                     return null;
                 }
 
