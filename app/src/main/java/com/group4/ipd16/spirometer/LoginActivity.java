@@ -39,7 +39,6 @@ public class LoginActivity extends BaseActivity {
         addUsersToSpinner();
 
         /*login */
-        //user = (EditText)findViewById(R.id.usertext);
         password = (EditText)findViewById(R.id.passwordtext);
         loginKnop = (Button)findViewById(R.id.loginbttn);
         registerBtn = (Button) findViewById(R.id.registerbttn);
@@ -85,17 +84,15 @@ public class LoginActivity extends BaseActivity {
     private void addUsersToSpinner() {
         userSpinner = (Spinner)findViewById(R.id.userSpinner);
         List<String> userList = new ArrayList<String>();
-        //DatabaseHandler db = new DatabaseHandler(this);
-        //spiroDB = CouchbaseDB.getSpiroDB(); // noSql couchbase
         List<User> users = new ArrayList<>();
 
-        // risky try catch, needs to be updated
         try{
             //users = db.getAllUsers();
             userList = spiroDB.getAllUsers();
         }
         catch (Exception ex){
-            LoginActivity.this.deleteDatabase("userInfo");
+            Log.i("TAG", "Deleting everything...");
+            spiroDB.cleanDB();
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userList);
