@@ -18,6 +18,7 @@ import com.couchbase.lite.android.AndroidContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -36,16 +37,9 @@ public class CouchbaseDB  {
     private String userId;
     private User currentUser;
 
-private  static CouchbaseDB spriroDB = new CouchbaseDB();
-  //  @Override
- /*   protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setUpCouchbaseLiteDB();
-       // context = getApplicationContext();
-    }*/
+    private  static CouchbaseDB spriroDB = new CouchbaseDB();
 
-    public static CouchbaseDB getSpiroDB(){
+    public static CouchbaseDB getSpiroDB(){ // return instance of database
         if(spriroDB != null)
             return spriroDB;
         else {
@@ -53,14 +47,11 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
         }
     }
 
-    public CouchbaseDB()// Context context)
-     {
-        // this.context = getApplicationContext();
-    //    this.context = context;
-      //  setUpCouchbaseLiteDB();
+    public CouchbaseDB() // constructor
+    {// empty
     }
 
-    public void setUpCouchbaseLiteDB() {
+    public void setUpCouchbaseLiteDB() {    // make connection with database
         try{
             manager = new Manager( new AndroidContext(context), Manager.DEFAULT_OPTIONS);
             database = manager.getDatabase(DB_NAME);
@@ -69,7 +60,7 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
         } catch (IOException e) {
             e.printStackTrace(); return;
         }
-        Query query = database.createAllDocumentsQuery();
+       /* Query query = database.createAllDocumentsQuery();
         query.setAllDocsMode(Query.AllDocsMode.ALL_DOCS);
         try {
             QueryEnumerator result = query.run();
@@ -79,24 +70,24 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
             }
         } catch (CouchbaseLiteException e) {
             e.printStackTrace();
-        }
+        }*/
     }
-    public void setCurrentUser(Document user) {
+    public void setCurrentUser(Document user) { // create User instance with corresponding properties from database
         Log.i(TAG, "Set user: " + user.getProperties());
         //int id, String first_name, String last_name, String doctor_email, int age, int height, int weight, String gender, String ethnicity
         currentUser = new User(userId, user.getProperty("first_name").toString(), user.getProperty("last_name").toString(), user.getProperty("mail_doctor").toString(),
                 user.getProperty("age").toString(), user.getProperty("height").toString(), user.getProperty("weight").toString(), user.getProperty("gender").toString(), user.getProperty("ethnicity").toString());
     }
-    public User getCurrentUser(){
+    public User getCurrentUser(){ // return User instance
         return currentUser;
     }
-    public String getUserID(){
+    public String getUserID(){  // return userID
         return userId;
     }
-    public User getUserById(String userId){
+    public User getUserById(String userId){ // return User instance with userID from database
         Log.i(TAG, "user id: " + userId);
         Document userDocument = database.getDocument(userId);
-        //return userDocument;
+        //return userDocument;      // to only return the user document from db
         setCurrentUser(userDocument);
         return getCurrentUser();
     }
@@ -104,11 +95,29 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
         Document doc = database.getDocument(userid);
         try {
             doc.delete();
+            DeleteDependencies(userid);
         } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
+            Log.e("ERROR", "Error deleting document", e);
         }
     }
-    public void cleanDB(){
+
+    private void DeleteDependencies(String userId) {
+        Query query = database.createAllDocumentsQuery();
+        query.setAllDocsMode(Query.AllDocsMode.ALL_DOCS);
+        try {
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext();){
+                QueryRow row = it.next();
+                Document doc = row.getDocument();
+                if(String.valueOf(doc.getProperty("user_id")).equals(userId))
+                    doc.delete();
+            }
+        } catch (CouchbaseLiteException e) {
+            Log.e("ERROR", "Error deleting user spirometry data", e);
+        }
+    }
+
+    public void cleanDB(){  // method used in beginning for easily deleting empty accounts
         Query query = database.createAllDocumentsQuery();
         query.setAllDocsMode(Query.AllDocsMode.ALL_DOCS);
         try {
@@ -120,31 +129,48 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
                     doc.delete();
             }
         } catch (CouchbaseLiteException e) {
-            e.printStackTrace();
+            Log.e("ERROR", "Error deleting user", e);
         }
     }
 
-    public String getFvcFromId(String userId){
+    public String getFvcFromId(String userId){     // function to return fvc from results, deprecated
         Document doc = database.getDocument(userId);
         Map<String, Object> properties =  doc.getProperties();
-        Log.i("TAG", "Properties: " + properties);
-        String fvc = (String) properties.get("fvc");
+        Log.i("TAG", "Properties: " + properties.get("data"));
+        String fvc = (String) properties.get("res_id*");
         Log.i("TAG", "FVC: " + fvc);
         return fvc;
+    }
+
+    public List<Map<String,Object>> getResultsFromId(){
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        Query query = database.createAllDocumentsQuery();
+        query.setAllDocsMode(Query.AllDocsMode.ALL_DOCS);
+        try {
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext();){
+                QueryRow row = it.next();
+                Document doc = row.getDocument();
+                if(String.valueOf(doc.getProperty("user_id")).equals(getUserID())){
+                    resultList.add(doc.getProperties());
+                }
+            }
+        } catch (CouchbaseLiteException e) {
+            Log.e("ERROR", "Error retrieving results", e);
+        }
+        return resultList;
     }
 
     protected void CreateDocument(Map<String, Object> userMap){
         // create new document and add data
         Document document = database.createDocument();
         String documentId = document.getId();
-        //Map<String, Object> map = new HashMap<String, Object>();
         try{
             //save properties to the document
             document.putProperties(userMap);
         } catch (CouchbaseLiteException e) {
             Log.e(TAG, "error putting", e);
         }
-        //return documentId;
     }
 
     public List<String> getAllUsers(){
@@ -161,8 +187,10 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
                 if(String.valueOf(row.getDocument().getProperty("first_name")) == "" )
                     row.getDocument().delete();
                 else{
-                    users.add(String.valueOf(row.getDocument().getProperty("first_name")) + " " + String.valueOf(row.getDocument().getProperty("last_name")));
-                    getUserById(doc.getId());
+                    if(row.getDocument().getProperties().get("first_name") != null) {
+                        users.add(String.valueOf(row.getDocument().getProperty("first_name")) + " " + String.valueOf(row.getDocument().getProperty("last_name")));
+                        getUserById(doc.getId());
+                    }
                 }
             }
         } catch (CouchbaseLiteException e) {
@@ -179,8 +207,47 @@ private  static CouchbaseDB spriroDB = new CouchbaseDB();
                 @Override
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties =  newRevision.getUserProperties();
+                    if (properties.get("results") == null){
+
+                    }
                     Log.i(TAG, "User properties: " + properties);
                     properties.putAll(updatedProperties);
+                    newRevision.setUserProperties(properties);
+                    return true;
+                }
+            });
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateResults(String userID, final Map<String, Object> resultMap) {
+        Document doc = database.getDocument(userID);
+        final Map<String, Object> result = new HashMap<>();
+        int count = 0;
+        try{
+            count = Integer.parseInt(doc.getProperties().get("count").toString());
+        }
+        catch (Exception e){
+            count = 0;
+        }
+        try {
+            final int finalCount = count;
+            doc.update(new Document.DocumentUpdater() {
+                @Override
+                public boolean update(UnsavedRevision newRevision) {
+                    Map<String, Object> properties =  newRevision.getUserProperties();
+
+                    if (properties.get("results") == null){
+                        resultMap.put("res_id", 1);
+                    }
+                    else{
+                        resultMap.put("res_id", finalCount+1);
+                    }
+                    result.put("results", resultMap);
+                    properties.put("count", finalCount+1);
+                    Log.i(TAG, "User properties: " + properties);
+                    properties.putAll(result);
                     newRevision.setUserProperties(properties);
                     return true;
                 }
