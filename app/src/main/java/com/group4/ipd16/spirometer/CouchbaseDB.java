@@ -207,9 +207,6 @@ public class CouchbaseDB  {
                 @Override
                 public boolean update(UnsavedRevision newRevision) {
                     Map<String, Object> properties =  newRevision.getUserProperties();
-                    if (properties.get("results") == null){
-
-                    }
                     Log.i(TAG, "User properties: " + properties);
                     properties.putAll(updatedProperties);
                     newRevision.setUserProperties(properties);
@@ -352,4 +349,27 @@ public class CouchbaseDB  {
     }
 
 
+    public String ResultOnSameDate(String date) {
+        boolean exists = false;
+        Query query = database.createAllDocumentsQuery();
+        query.setAllDocsMode(Query.AllDocsMode.ALL_DOCS);
+        try {
+            QueryEnumerator result = query.run();
+            for (Iterator<QueryRow> it = result; it.hasNext();){
+                QueryRow row = it.next();
+                Document doc = row.getDocument();
+                Log.i(TAG, String.valueOf(row.getDocument().getProperties()));
+                // check for results on the same day from the same user
+                if (String.valueOf(doc.getProperty("date")).equals(date)) {
+
+                    if (String.valueOf(doc.getProperty("user_id")).equals(getUserID()))
+                        return doc.getId();
+                }
+            }
+            return "";
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 }
