@@ -66,6 +66,7 @@ public class ResultsActivity extends BaseActivity {
         btnSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SaveResultsGraph();
                 Intent i = new Intent(ResultsActivity.this, ShareActivity.class);
                 i.putExtra("results", ArrayUtils.toDoubleArray(listResults));
                 i.putExtra("fvc", fvc);

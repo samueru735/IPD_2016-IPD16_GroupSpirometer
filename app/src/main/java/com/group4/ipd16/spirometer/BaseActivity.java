@@ -218,7 +218,7 @@ public class BaseActivity extends AppCompatActivity {
             File[] files = mediaStorageDir.listFiles();
             for (int i = 0; i < files.length; ++i) {
                 File file = files[i];
-                if (!file.isDirectory()) {
+                if (!file.isDirectory() && file.getName().endsWith(".jpg")) {
                     if (newestFile == null || file.lastModified() > (newestFile.lastModified())) {
                         newestFile = file;
                     }
