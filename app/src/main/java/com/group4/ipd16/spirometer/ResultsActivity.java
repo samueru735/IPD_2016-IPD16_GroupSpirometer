@@ -1,7 +1,9 @@
 package com.group4.ipd16.spirometer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +56,6 @@ public class ResultsActivity extends BaseActivity {
             e.printStackTrace();
         }
         Log.i("TAG", "Current user in results: " + CouchbaseDB.getSpiroDB().getCurrentUser().getFirst_name());
-
 
         tvConnStatus = (TextView)findViewById(R.id.tvConnStatus);
         tvResult = (TextView)findViewById(R.id.tvResult);
@@ -111,7 +112,7 @@ public class ResultsActivity extends BaseActivity {
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c.getTime());
-        data.put("date", formattedDate); //"11-May-2016");
+        data.put("date", formattedDate); //"10-May-2016");
         data.put("data", listResults);
         data.put("fvc", fvc);
         data.put("fev1", fev1);
@@ -119,15 +120,40 @@ public class ResultsActivity extends BaseActivity {
 
         //resultMap.put("res_id_" + DateFormat.getDateTimeInstance().format(new Date()), data);
         //resultMap.put("result", data);
-        try{
-            //CouchbaseDB.getSpiroDB().updateResults(CouchbaseDB.getSpiroDB().getUserID(), resultMap);
-            CouchbaseDB.getSpiroDB().CreateDocument(data);
-            Toast.makeText(ResultsActivity.this, "Results saved", Toast.LENGTH_LONG).show();
+        String resultId = CouchbaseDB.getSpiroDB().ResultOnSameDate(formattedDate);
+        if(!resultId.equals("")){   // result on that day already exists for the userId
+            ShowAlert(resultId, data);
         }
-        catch (Exception e){
-            Log.e("TAG", "Error saving results", e);
+        else{
+            try{
+                CouchbaseDB.getSpiroDB().CreateDocument(data);
+                Toast.makeText(ResultsActivity.this, "Results saved", Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e){
+                Log.e("TAG", "Error saving results", e);
+            }
         }
+    }
 
+    private void ShowAlert(String resultId, Map<String, Object> data) {
+        final String resultIdFinal = resultId;
+        final Map<String, Object> dataFinal = data;
+        new AlertDialog.Builder(ResultsActivity.this)
+                .setTitle("Replace result")
+                .setMessage("Are you sure you want to replace this result?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        CouchbaseDB.getSpiroDB().updateDoc(resultIdFinal, dataFinal);
+                        Toast.makeText(ResultsActivity.this, "Results saved", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("TAG", "Result replacement canceled");
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     public void SaveResultsGraph(){
