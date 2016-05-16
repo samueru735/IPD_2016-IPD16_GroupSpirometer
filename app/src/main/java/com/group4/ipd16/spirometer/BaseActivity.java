@@ -228,4 +228,27 @@ public class BaseActivity extends AppCompatActivity {
         }
         return newestFile;
     }
+
+    public File getNewestCSVInDirectory() {
+        File newestFile = null;
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + BaseActivity.PACKAGE_NAME
+                + "/Files");
+
+        // start loop trough files in directory
+        if (mediaStorageDir.exists()) {
+            File[] files = mediaStorageDir.listFiles();
+            for (int i = 0; i < files.length; ++i) {
+                File file = files[i];
+                if (!file.isDirectory() && file.getName().endsWith(".csv")) {
+                    if (newestFile == null || file.lastModified() > (newestFile.lastModified())) {
+                        newestFile = file;
+                    }
+                }
+            }
+            Log.d("CheckingFILE!!!", newestFile.getPath());
+        }
+        return newestFile;
+    }
 }

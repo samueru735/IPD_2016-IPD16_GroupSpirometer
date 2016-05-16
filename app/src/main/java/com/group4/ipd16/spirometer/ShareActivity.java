@@ -21,6 +21,7 @@ public class ShareActivity extends BaseActivity {
     private double fvc, fev1;
     private Calendar cal;
     private String currentDateTime;
+    private CSVHandler csvHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class ShareActivity extends BaseActivity {
         fev1 = i.getDoubleExtra("fev1", 0.00);
         currentDateTime = DateFormat.getDateTimeInstance().format(new Date());
         user = CouchbaseDB.getSpiroDB().getCurrentUser();
+        csvHandler = new CSVHandler();
+        csvHandler.CreateCSVFile(arrayResults);
         sendMail();
     }
 
@@ -41,6 +44,7 @@ public class ShareActivity extends BaseActivity {
         Log.i("Send email", "");
 
         Uri u = Uri.fromFile(getNewestFileInDirectory());
+        Uri csv = Uri.fromFile(getNewestCSVInDirectory());
 
         String[] TO = {user.getDoctor_email()}; // user.getEmailDoctor
         //String[] CC = {"doctorPlastic@gmail.com"};
@@ -59,6 +63,7 @@ public class ShareActivity extends BaseActivity {
         sbMessage.append(Arrays.toString(arrayResults));
 
         emailIntent.putExtra(Intent.EXTRA_STREAM, u);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, csv);
 
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         //emailIntent.putExtra(Intent.EXTRA_CC, CC);
