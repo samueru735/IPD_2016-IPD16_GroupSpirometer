@@ -40,6 +40,8 @@ public class ShareActivity extends BaseActivity {
     protected void sendMail() {
         Log.i("Send email", "");
 
+        Uri u = Uri.fromFile(getNewestFileInDirectory());
+
         String[] TO = {user.getDoctor_email()}; // user.getEmailDoctor
         //String[] CC = {"doctorPlastic@gmail.com"};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
@@ -55,6 +57,8 @@ public class ShareActivity extends BaseActivity {
         sbMessage.append("FEV1: " + fev1);
         sbMessage.append("\n");
         sbMessage.append(Arrays.toString(arrayResults));
+
+        emailIntent.putExtra(Intent.EXTRA_STREAM, u);
 
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         //emailIntent.putExtra(Intent.EXTRA_CC, CC);

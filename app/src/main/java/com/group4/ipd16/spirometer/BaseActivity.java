@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class BaseActivity extends AppCompatActivity {
 
     protected DrawerLayout drawerLayout;
@@ -28,6 +31,7 @@ public class BaseActivity extends AppCompatActivity {
     private ArrayAdapter<String> drawerAdapter;
     protected static int position;
     private static boolean isLaunch = true;
+    public static String PACKAGE_NAME;
 
     private static final String USER_ID = "user_id";
    // protected SharedPreferences sharedPref;
@@ -38,6 +42,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
+        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         //context = BaseActivity.this;
         //sharedPref = getSharedPreferences(USER_ID, MODE_PRIVATE);
@@ -200,5 +205,27 @@ public class BaseActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    public File getNewestFileInDirectory() {
+        File newestFile = null;
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + BaseActivity.PACKAGE_NAME
+                + "/Files");
+
+        // start loop trough files in directory
+        if (mediaStorageDir.exists()) {
+            File[] files = mediaStorageDir.listFiles();
+            for (int i = 0; i < files.length; ++i) {
+                File file = files[i];
+                if (!file.isDirectory()) {
+                    if (newestFile == null || file.lastModified() > (newestFile.lastModified())) {
+                        newestFile = file;
+                    }
+                }
+            }
+            Log.d("CheckingFILE!!!", newestFile.getPath());
+        }
+        return newestFile;
     }
 }

@@ -77,6 +77,7 @@ public class ResultsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 SaveResults();
+                SaveResultsGraph();
             }
         });
 
@@ -127,6 +128,12 @@ public class ResultsActivity extends BaseActivity {
             Log.e("TAG", "Error saving results", e);
         }
 
+    }
+
+    public void SaveResultsGraph(){
+        GraphView graph = (GraphView)findViewById(R.id.graphResults);
+        ImageHandler imageHandler = new ImageHandler();
+        imageHandler.saveViewtoStorage(graph);
     }
 
     private void DrawGraph() {
