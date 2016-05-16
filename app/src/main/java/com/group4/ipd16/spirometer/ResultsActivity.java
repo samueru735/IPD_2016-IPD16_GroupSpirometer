@@ -170,7 +170,7 @@ public class ResultsActivity extends BaseActivity {
         DataPoint[]resultDataPoints = new DataPoint[listResults.size()];
         for(int i = 0; i < listResults.size(); i++)
         {
-            resultDataPoints[i] = new DataPoint(i, listResults.get(i));
+            resultDataPoints[i] = new DataPoint(i*10, listResults.get(i)); // * 10 for delay of 10ms
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
         graph.addSeries(series);
