@@ -3,6 +3,7 @@ package com.group4.ipd16.spirometer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private Spinner userSpinner;
 
@@ -26,10 +27,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_login);
-        getLayoutInflater().inflate(R.layout.activity_login, frameLayout);
-        drawerList.setItemChecked(position, true);
-
+        setContentView(R.layout.activity_login);
+        //getLayoutInflater().inflate(R.layout.activity_login, frameLayout);
         // voeg users toe aan de Spinner (dropdownlist)
         context = getApplicationContext();
         spiroDB = new CouchbaseDB();
@@ -104,5 +103,11 @@ public class LoginActivity extends BaseActivity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userSpinner.setAdapter(dataAdapter);
+    }
+
+    //disable back button when in Login menu for safety
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

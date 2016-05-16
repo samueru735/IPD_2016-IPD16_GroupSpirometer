@@ -68,7 +68,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
     private void addDrawerItems(){
-        String[] activityArray = {"Login", "Home", "Results", "History", "Share", "Profile"};
+        String[] activityArray = { "Home","Profile", "History", "Logout"};
         drawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, activityArray);
         drawerList.setAdapter(drawerAdapter);
 
@@ -100,10 +100,10 @@ public class BaseActivity extends AppCompatActivity {
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(drawerToggle);
 
-        if(isLaunch){
+        /*if(isLaunch){
             isLaunch = false;
             openActivity(0);
-        }
+        }*/
     }
 
     protected void openActivity(int position){
@@ -113,28 +113,24 @@ public class BaseActivity extends AppCompatActivity {
 
         switch (position) {
             case 0:
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-            case 1:
                 startActivity(new Intent(this, HomeActivity.class));
                 break;
-            case 2:
-                startActivity(new Intent(this, ResultsActivity.class));
+            case 1:
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
-            case 3:
+            case 2:
                 startActivity(new Intent(this, HistoryActivity.class));
                 break;
-            case 4:
-                startActivity(new Intent(this, ShareActivity.class));
-                break;
-            case 5:
-                startActivity(new Intent(this, ProfileActivity.class));
+            case 3:
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             default:
                 break;
         }
 
-        Toast.makeText(this, "Selected Item Position::"+position, Toast.LENGTH_LONG).show();
+/*
+        //Toast.makeText(this, "Selected Item Position::"+position, Toast.LENGTH_LONG).show();
+*/
     }
 
     /*@Override

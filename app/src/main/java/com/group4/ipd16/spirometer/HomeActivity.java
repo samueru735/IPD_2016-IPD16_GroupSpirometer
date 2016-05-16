@@ -155,38 +155,4 @@ public class HomeActivity extends BaseActivity {
         tvConnStatus.setText("Connectionstatus: " + btConn.Connect());
     }
 
-    protected void openActivity(int position){
-        //drawerLayout.closeDrawers();
-        drawerLayout.closeDrawer(drawerList);
-        BaseActivity.position = position;
-
-        switch (position) {
-            case 0:
-                startActivity(new Intent(this, LoginActivity.class));
-                break;
-            case 1:
-                startActivity(new Intent(this, HomeActivity.class));
-                break;
-            case 2:
-                startActivity(new Intent(this, ResultsActivity.class));
-                break;
-            case 3:
-                startActivity(new Intent(this, HistoryActivity.class));
-                break;
-            case 4:
-                startActivity(new Intent(this, ShareActivity.class));
-                break;
-            case 5:
-                Intent i = new Intent(this, ProfileActivity.class);
-                i.putExtra("user_id", userID);
-                startActivity(i);
-                break;
-            default:
-                break;
-        }
-
-        Toast.makeText(this, "Selected Item Position::" + position, Toast.LENGTH_LONG).show();
-    }
-
-
 }
