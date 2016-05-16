@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -153,6 +152,30 @@ public class HomeActivity extends BaseActivity {
             if(mac_address != null)
                 btConn.setMacAddress(mac_address);
         tvConnStatus.setText("Connectionstatus: " + btConn.Connect());
+    }
+    protected void openActivity(int position){
+        //drawerLayout.closeDrawers();
+        drawerLayout.closeDrawer(drawerList);
+        BaseActivity.position = position;
+
+        switch (position) {
+            case 0:
+                startActivity(new Intent(this, HomeActivity.class));
+                break;
+            case 1:
+                Intent i = new Intent(this, ProfileActivity.class);
+                i.putExtra("user_id", userID);
+                startActivity(i);
+                break;
+            case 2:
+                startActivity(new Intent(this, HistoryActivity.class));
+                break;
+            case 3:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 
 }
