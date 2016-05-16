@@ -1,11 +1,11 @@
 package com.group4.ipd16.spirometer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,7 +34,6 @@ public class ProfileActivity extends BaseActivity {
     private List<String> ethnicityList;
     private User user;
     private Document dUser;
-    //private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +70,8 @@ public class ProfileActivity extends BaseActivity {
         spiroDB = CouchbaseDB.getSpiroDB();
 
         List<String>testList = spiroDB.getAllUsers();
-        Log.i("TAG", "Testlist contains: " + testList.toString());
-
-        //userid = spiroDB.getUserId();
+        Log.i("TAG", "All users list contains: " + testList.toString());
         Log.i("TAG", "Current user id: " + userid);
-
 
         try{
             user = spiroDB.getUserById(userid);
@@ -85,7 +81,6 @@ public class ProfileActivity extends BaseActivity {
         catch (Exception e){
             Log.i("TAG", "Error occured: ", e);
         }
-
 
         btnSaveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,12 +116,30 @@ public class ProfileActivity extends BaseActivity {
         btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spiroDB.deleteDoc(userid);
-                Toast.makeText(ProfileActivity.this, "Profile deleted", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(ProfileActivity.this, LoginActivity.class);
-                startActivity(i);
+                ShowAlert(userid);
             }
         });
+    }
+    private void ShowAlert(String resultId) {
+        final String resultIdFinal = resultId;
+        new AlertDialog.Builder(ProfileActivity.this)
+                .setTitle("Delete profile")
+                .setMessage("Are you sure you want to delete this profile and all of its results?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        spiroDB.deleteDoc(userid);
+                        Toast.makeText(ProfileActivity.this, "Profile deleted", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(ProfileActivity.this, LoginActivity.class);
+                        startActivity(i);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("TAG", "Profile deletion canceled");
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void FilloutForm() {
@@ -146,10 +159,6 @@ public class ProfileActivity extends BaseActivity {
 
    protected CouchbaseDB getSpiroDB(){
        return CouchbaseDB.getSpiroDB();
-      // if(spiroDB != null)
-       //     return spiroDB;
-       //else
-       //   return new CouchbaseDB(ProfileActivity.this);
    }
 
     private boolean controlEmptyInputFields() {
@@ -165,8 +174,4 @@ public class ProfileActivity extends BaseActivity {
         }
         return pass;
     }
-
-
-
-
 }

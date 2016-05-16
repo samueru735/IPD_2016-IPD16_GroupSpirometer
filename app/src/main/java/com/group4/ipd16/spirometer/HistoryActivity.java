@@ -150,7 +150,7 @@ public class HistoryActivity extends BaseActivity {
         DataPoint[]resultDataPoints = new DataPoint[listResults.size()];
         for(int i = 0; i < listResults.size(); i++)
         {
-            resultDataPoints[i] = new DataPoint(i, listResults.get(i));
+            resultDataPoints[i] = new DataPoint(i*10, listResults.get(i)); // *10 for delay of 10ms
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
         graph.addSeries(series);
@@ -163,16 +163,10 @@ public class HistoryActivity extends BaseActivity {
         series.setDataPointsRadius(1);
         graph.getViewport().setXAxisBoundsManual(false);
         graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(300);
+        graph.getViewport().setMaxX(4000);
         graph.getViewport().setMinY(0);
         graph.getViewport().setMaxY(10);
         graph.getViewport().setYAxisBoundsManual(true);
-        series.setOnDataPointTapListener(new OnDataPointTapListener() {
-            @Override
-            public void onTap(Series series, DataPointInterface dataPoint) {
-                Toast.makeText(HistoryActivity.this, "Series: On Data Point clicked: " + dataPoint, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }
