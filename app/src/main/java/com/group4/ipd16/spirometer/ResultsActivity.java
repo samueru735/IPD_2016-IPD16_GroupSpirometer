@@ -110,7 +110,7 @@ public class ResultsActivity extends BaseActivity {
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c.getTime());
-        data.put("date", formattedDate);
+        data.put("date", formattedDate); //"11-May-2016");
         data.put("data", listResults);
         data.put("fvc", fvc);
         data.put("fev1", fev1);

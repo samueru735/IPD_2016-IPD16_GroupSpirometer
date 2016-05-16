@@ -115,9 +115,12 @@ public class HistoryActivity extends BaseActivity {
 
         //scrolling
         bar_graph.getViewport().setScrollable(true);
-        bar_graph.getViewport().setXAxisBoundsManual(false);
-        bar_graph.getViewport().setMinX(dayOfMonth-counter);
-        bar_graph.getViewport().setMaxX(dayOfMonth-counter+4);
+        bar_graph.getViewport().setXAxisBoundsManual(true);
+        bar_graph.getViewport().setMinX(dayOfMonth - counter);
+        bar_graph.getViewport().setMaxX(dayOfMonth - counter + 4);
+        bar_graph.getViewport().setMinY(0);
+        bar_graph.getViewport().setMaxY(12);
+        bar_graph.getViewport().setYAxisBoundsManual(true);
         // tap info
         bar_series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
@@ -151,7 +154,6 @@ public class HistoryActivity extends BaseActivity {
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
         graph.addSeries(series);
-
         series.setTitle("(FVC, forced vital capacity) in L/s");
 
         graph.getLegendRenderer().setVisible(true);
@@ -159,6 +161,12 @@ public class HistoryActivity extends BaseActivity {
 
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(1);
+        graph.getViewport().setXAxisBoundsManual(false);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(300);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(10);
+        graph.getViewport().setYAxisBoundsManual(true);
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
