@@ -105,7 +105,14 @@ public class MyMath {
         int oneSecond = 1000;
 
         for ( int i = 0; i < oneSecond/delay; i++){
-            fev1+= listResults.get(i)*delay;
+            if(i < listResults.size())
+                fev1 += listResults.get(i)*delay;
+            else{
+               // oneSecond -= i * delay; // one second is different, because measurement is too short
+                i = 1000;
+
+            }
+
         }
         fev1 /= oneSecond;
         return fev1;
