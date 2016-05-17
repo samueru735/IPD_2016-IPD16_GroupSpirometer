@@ -2,6 +2,7 @@ package com.group4.ipd16.spirometer;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,12 +12,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -32,6 +36,11 @@ public class BaseActivity extends AppCompatActivity {
     protected static int position;
     private static boolean isLaunch = true;
     public static String PACKAGE_NAME;
+    public static String GENDER = "male";
+    public static String FULL_NAME = "";
+    public ImageView imageView;
+    public TextView textViewName;
+    public LayoutInflater layoutInflater;
 
     private static final String USER_ID = "user_id";
    // protected SharedPreferences sharedPref;
@@ -44,6 +53,8 @@ public class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.navigation_drawer);
         PACKAGE_NAME = getApplicationContext().getPackageName();
 
+        layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view  = layoutInflater.inflate(R.layout.drawer, null);
         //context = BaseActivity.this;
         //sharedPref = getSharedPreferences(USER_ID, MODE_PRIVATE);
         /* Drawer Menu initialization */
@@ -51,7 +62,13 @@ public class BaseActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         activityTitle = getTitle().toString();
         frameLayout = (FrameLayout)findViewById(R.id.content_frame);
+        drawerList.addHeaderView(getLayoutInflater().inflate(R.layout.drawer, null));
 
+        imageView = (ImageView) drawerList.findViewById(R.id.ImageID);
+        textViewName = (TextView)drawerList.findViewById(R.id.textViewName);
+        textViewName.setText(FULL_NAME);
+        if (GENDER.equals("male")) imageView.setImageResource(R.drawable.malefillcircle128);
+        else imageView.setImageResource(R.drawable.femalefillcircle512);
         addDrawerItems();
         setupDrawer();
 
@@ -59,6 +76,10 @@ public class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         Log.i("TAG", "BaseActivity");
+
+
+
+
 
 
      //   spiroDB = CouchbaseDB.getSpiroDB();
@@ -117,16 +138,16 @@ public class BaseActivity extends AppCompatActivity {
         BaseActivity.position = position;
 
         switch (position) {
-            case 0:
+            case 1:
                 startActivity(new Intent(this, HomeActivity.class));
                 break;
-            case 1:
+            case 2:
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
-            case 2:
+            case 3:
                 startActivity(new Intent(this, HistoryActivity.class));
                 break;
-            case 3:
+            case 4:
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             default:

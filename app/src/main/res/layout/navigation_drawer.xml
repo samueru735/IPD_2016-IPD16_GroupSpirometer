@@ -9,42 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-<!--    &lt;!&ndash; Left drawer &ndash;&gt;
-    <RelativeLayout
-        android:id="@+id/leftDrawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:orientation="horizontal"
-        android:gravity="center" >
-
-        <ImageView
-            android:id="@+id/imgProfilePic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/logo"
-            android:contentDescription="@string/profile_pic" />
-
-        <TextView
-            android:id="@+id/lblUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textStyle="bold"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
-
-        <ListView
-            android:id="@+id/navList"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="#f1e9e9"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="1dp" />
-
-    </RelativeLayout>-->
-
     <ListView
         android:id="@+id/navList"
         android:layout_width="240dp"
@@ -54,4 +18,5 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="1dp" />
+
 </android.support.v4.widget.DrawerLayout>
