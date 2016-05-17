@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         ethnicityList.add("Caucasian");
         ethnicityList.add("Asian");
         ethnicityList.add("Hispanic");
-        ethnicityList.add("African American");
+        ethnicityList.add("African");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ethnicityList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ethnicitySpinner.setAdapter(dataAdapter);

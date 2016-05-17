@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeActivity extends BaseActivity {
 
@@ -26,6 +29,8 @@ public class HomeActivity extends BaseActivity {
     private double incomingData, previousIncomingData;
     private List<Float> listResult;
     private String userID;
+
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,7 @@ public class HomeActivity extends BaseActivity {
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
         resultIntent = new Intent(this, ResultsActivity.class);
+        //TIMER
 
         //test
         test.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +81,27 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    btnSendStart.setVisibility(View.GONE);
+                    findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+
+                    Timer t = new Timer();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    btnStartResultActivity.setVisibility(View.VISIBLE);
+                                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                                }
+                            });
+                        }
+                    };
+                    t.schedule(task, 4000);
                     btConn.sendData("s");
-                    btnStartResultActivity.setVisibility(View.VISIBLE);
+
+
                     //startActivity(resultIntent);
-                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 } catch (Exception e) {
                     Log.e("TAG", e.toString());
                     Toast.makeText(HomeActivity.this, "Oops... An error occurred, try again", Toast.LENGTH_SHORT).show();
