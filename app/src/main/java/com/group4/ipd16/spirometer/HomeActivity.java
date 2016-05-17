@@ -190,18 +190,18 @@ public class HomeActivity extends BaseActivity {
         BaseActivity.position = position;
 
         switch (position) {
-            case 0:
+            case 1:
                 startActivity(new Intent(this, HomeActivity.class));
                 break;
-            case 1:
+            case 2:
                 Intent i = new Intent(this, ProfileActivity.class);
                 i.putExtra("user_id", userID);
                 startActivity(i);
                 break;
-            case 2:
+            case 3:
                 startActivity(new Intent(this, HistoryActivity.class));
                 break;
-            case 3:
+            case 4:
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             default:

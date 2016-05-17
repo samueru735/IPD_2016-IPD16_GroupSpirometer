@@ -8,14 +8,16 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logoicon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name=".BaseActivity" >
+        <activity android:name=".BaseActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,36 +26,44 @@
         </activity>
         <activity
             android:name=".BluetoothDeviceListActivity"
-            android:label="@string/title_activity_bluetooth_connect" >
+            android:label="@string/title_activity_bluetooth_connect"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ResultsActivity"
-            android:label="@string/title_activity_results" >
+            android:label="@string/title_activity_results"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".HistoryActivity"
-            android:label="@string/title_activity_history" >
+            android:label="@string/title_activity_history"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ShareActivity"
-            android:label="@string/title_activity_share" >
+            android:label="@string/title_activity_share"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait">
         </activity>
         <activity
 
             android:name=".TestActivity"
-            android:label="@string/title_activity_test" >
+            android:label="@string/title_activity_test"
+            android:screenOrientation="portrait">
 		</activity>
 		<activity
             android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile" >
+            android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

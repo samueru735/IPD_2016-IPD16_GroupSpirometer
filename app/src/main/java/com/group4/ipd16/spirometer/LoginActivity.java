@@ -70,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                             Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                             i.putExtra("user_id", userID);
                             i.putExtra("userName", String.valueOf(userSpinner.getSelectedItem()));
+                            BaseActivity.FULL_NAME = (String.valueOf(userSpinner.getSelectedItem()));
+                            BaseActivity.GENDER = spiroDB.getUserById(userID).getGender();
                             try{
                                 Log.i("TAG" ,"FVC for this user: "+ spiroDB.getFvcFromId(userID));
                             }
