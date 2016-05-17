@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Spirometer App"
+            android:text="Spirometer Pro"
             android:id="@+id/HomeTitle"
             android:layout_alignTop="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
