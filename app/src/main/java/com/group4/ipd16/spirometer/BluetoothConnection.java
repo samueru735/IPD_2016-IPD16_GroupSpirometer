@@ -138,7 +138,7 @@ public class BluetoothConnection{
         Log.i("TAG", "start listening");
         stopWorker = false;
         readBufferPosition = 0;
-        readBuffer = new byte[1024];
+        readBuffer = new byte[2048];
         workerThread = new Thread(new Runnable()
         {
             public void run()
@@ -168,7 +168,9 @@ public class BluetoothConnection{
                                         {
                                             try {
                                            //     Log.i("TAG", "trying");
-                                                listResults.add(Float.parseFloat(data.toString()));
+                                                String dataString = data.toString();
+                                                dataString = dataString.replaceAll("[^\\d.]", "");
+                                                listResults.add(Float.parseFloat(dataString));
                                                 //if(stop == true){
                                                  //   mmOutputStream.write(("x").getBytes());
                                                // }

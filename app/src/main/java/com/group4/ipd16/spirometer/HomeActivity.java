@@ -203,5 +203,4 @@ public class HomeActivity extends BaseActivity {
                 break;
         }
     }
-
 }
