@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,7 +60,10 @@ public class HomeActivity extends BaseActivity {
         tvSentData = (TextView)findViewById(R.id.tvSentData);
         bluetoothActivityIntent = new Intent(this,BluetoothDeviceListActivity.class);
         resultIntent = new Intent(this, ResultsActivity.class);
-        //TIMER
+        //SCROLL
+
+        TextView tv = (TextView)findViewById(R.id.HomeTextView);
+        tv.setMovementMethod(new ScrollingMovementMethod());
 
         //test
         test.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +97,12 @@ public class HomeActivity extends BaseActivity {
                                 public void run() {
                                     btnStartResultActivity.setVisibility(View.VISIBLE);
                                     findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                                    findViewById(R.id.klaar).setVisibility(View.VISIBLE);
                                 }
                             });
                         }
                     };
-                    t.schedule(task, 4000);
+                    t.schedule(task, 8000);
                     btConn.sendData("s");
 
 

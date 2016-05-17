@@ -22,28 +22,48 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvResult"
         />
-
-    <com.jjoe64.graphview.GraphView
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="L\ni\nt\ne\nr\ns"
+            android:layout_gravity="center"/>
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="300dip"
+            android:id="@+id/graphResults"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="miliseconds"
+        android:layout_gravity="center"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dip"
-        android:id="@+id/graphResults"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnSendMail"
-        android:id="@+id/btnSendMail"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnRetry"
-        android:id="@+id/btnRetry"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnSaveResults"
-        android:id="@+id/btnSaveResults"
-        />
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSendMail"
+            android:id="@+id/btnSendMail"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnRetry"
+            android:id="@+id/btnRetry"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSaveResults"
+            android:id="@+id/btnSaveResults"
+            />
+    </LinearLayout>
+
+
 </LinearLayout>

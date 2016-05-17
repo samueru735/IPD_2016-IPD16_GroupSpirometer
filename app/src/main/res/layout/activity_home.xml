@@ -48,6 +48,7 @@
             android:fontFamily="sans-serif-condensed"
             android:textSize="30dp"/>
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
             android:maxLines="6"
             android:lines="6"
             android:scrollbars = "vertical"
+
             />
 
         />
@@ -88,7 +90,7 @@
                 android:text="Show result"
                 android:id="@+id/btnShowResultActivity"
                 android:visibility="gone"
-               />
+                />
         </LinearLayout>
 
 
@@ -110,23 +112,29 @@
             android:indeterminate="true"
             android:visibility="invisible"
             android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/klaar"
+            android:text="DONE! you can see the results now."/>
 
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvConnStatus"
-        android:text="@string/tvConnStatus"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvResult"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvSentData"
-        />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvConnStatus"
+            android:text="@string/tvConnStatus"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvResult"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSentData"
+            />
 
     </LinearLayout>
 
