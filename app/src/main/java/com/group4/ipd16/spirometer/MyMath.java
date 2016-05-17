@@ -11,6 +11,8 @@ import java.util.List;
  * Created by Samuel on 11/04/2016.
  */
 public class MyMath {
+    private static final double FEV1_MULTIPLIER = 1;
+    private static final double FVC_MULTIPLIER = 1;
     private static double FILTER = 0.30;
     private static double PEAK_FILTER = 12.00;
 
@@ -97,7 +99,7 @@ public class MyMath {
             fvc += result;
         }
         fvc /= 1000;
-
+        fvc *= FVC_MULTIPLIER;
         return fvc;
     }
     public static Double FEV1(List<Double>listResults) { // time between results: 10 ms
@@ -116,6 +118,7 @@ public class MyMath {
 
         }
         fev1 /= oneSecond;
+        fev1 *= FEV1_MULTIPLIER;
         return fev1;
     }
 }

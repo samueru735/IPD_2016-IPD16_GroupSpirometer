@@ -90,7 +90,7 @@ public class BluetoothConnection{
                     + mmDevice.getAddress() + " failed:" + ex.getMessage());
             }
         if(!mac_address.equals("none"))
-            return "Still connected";
+            return "Connection uncertain, try again";
         else
             return "couldn't connect";
     }
