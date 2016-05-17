@@ -30,15 +30,15 @@ public class CSVHandler {
         sb = new StringBuilder();
         sb.append("Time(ms)");
         sb.append(",");
-        sb.append("Litres");
+        sb.append("FVC(litres)");
         sb.append(System.getProperty("line.separator"));
 
         for (double element:data) {
-            if (!(time == 0.0)) time += 10;
             sb.append(time);
             sb.append(",");
             sb.append(element);
             sb.append(System.getProperty("line.separator"));
+            time += 10;
         }
         StoreCSV();
     }

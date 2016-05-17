@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,13 +43,15 @@ public class ShareActivity extends BaseActivity {
 
     protected void sendMail() {
         Log.i("Send email", "");
-
-        Uri u = Uri.fromFile(getNewestFileInDirectory());
-        Uri csv = Uri.fromFile(getNewestCSVInDirectory());
+        ArrayList<Uri> uris = new ArrayList<Uri>();
+        Uri image = Uri.fromFile(getNewestFileInDirectory(".jpg"));
+        Uri csv = Uri.fromFile(getNewestFileInDirectory(".csv"));
+        uris.add(image);
+        uris.add(csv);
 
         String[] TO = {user.getDoctor_email()}; // user.getEmailDoctor
         //String[] CC = {"doctorPlastic@gmail.com"};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
         StringBuilder sbMessage = new StringBuilder();
@@ -62,8 +65,9 @@ public class ShareActivity extends BaseActivity {
         sbMessage.append("\n");
         sbMessage.append(Arrays.toString(arrayResults));
 
-        emailIntent.putExtra(Intent.EXTRA_STREAM, u);
-        emailIntent.putExtra(Intent.EXTRA_STREAM, csv);
+        //emailIntent.putExtra(Intent.EXTRA_STREAM, u);
+        //emailIntent.putExtra(Intent.EXTRA_STREAM, csv);
+        emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         //emailIntent.putExtra(Intent.EXTRA_CC, CC);

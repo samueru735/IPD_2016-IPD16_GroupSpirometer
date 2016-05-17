@@ -206,7 +206,7 @@ public class BaseActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-    public File getNewestFileInDirectory() {
+    public File getNewestFileInDirectory(String type) {
         File newestFile = null;
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
                 + "/Android/data/"
@@ -218,7 +218,7 @@ public class BaseActivity extends AppCompatActivity {
             File[] files = mediaStorageDir.listFiles();
             for (int i = 0; i < files.length; ++i) {
                 File file = files[i];
-                if (!file.isDirectory() && file.getName().endsWith(".jpg")) {
+                if (!file.isDirectory() && file.getName().endsWith(type)) {
                     if (newestFile == null || file.lastModified() > (newestFile.lastModified())) {
                         newestFile = file;
                     }
@@ -229,7 +229,7 @@ public class BaseActivity extends AppCompatActivity {
         return newestFile;
     }
 
-    public File getNewestCSVInDirectory() {
+    /*public File getNewestCSVInDirectory() {
         File newestFile = null;
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
                 + "/Android/data/"
@@ -250,5 +250,5 @@ public class BaseActivity extends AppCompatActivity {
             Log.d("CheckingFILE!!!", newestFile.getPath());
         }
         return newestFile;
-    }
+    }*/
 }
