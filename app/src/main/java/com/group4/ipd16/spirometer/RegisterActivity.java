@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
             profile.put("ethnicity", ethnicitySpinner.getSelectedItem().toString());
             profile.put("gender", gender);
             profile.put("password", editPassword.getText().toString());
-            CouchbaseDB.getSpiroDB().CreateDocument(profile);
+            CouchbaseDB.getSpiroDB().CreateUserDocument(profile);
             Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(i);
         }

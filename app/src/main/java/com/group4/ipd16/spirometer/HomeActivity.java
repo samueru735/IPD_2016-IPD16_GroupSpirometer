@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Handler;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -102,9 +101,8 @@ public class HomeActivity extends BaseActivity {
                             });
                         }
                     };
-                    t.schedule(task, 8000);
                     btConn.sendData("s");
-
+                    t.schedule(task, 8000);
 
                     //startActivity(resultIntent);
                 } catch (Exception e) {

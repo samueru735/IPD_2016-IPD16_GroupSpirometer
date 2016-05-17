@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -117,15 +116,13 @@ public class ResultsActivity extends BaseActivity {
         data.put("fev1", fev1);
         data.put("user_id", CouchbaseDB.getSpiroDB().getUserID());
 
-        //resultMap.put("res_id_" + DateFormat.getDateTimeInstance().format(new Date()), data);
-        //resultMap.put("result", data);
         String resultId = CouchbaseDB.getSpiroDB().ResultOnSameDate(formattedDate);
         if(!resultId.equals("")){   // result on that day already exists for the userId
             ShowAlert(resultId, data);
         }
         else{
             try{
-                CouchbaseDB.getSpiroDB().CreateDocument(data);
+                CouchbaseDB.getSpiroDB().CreateDataDocument(data);
                 Toast.makeText(ResultsActivity.this, "Results saved", Toast.LENGTH_LONG).show();
             }
             catch (Exception e){
@@ -162,7 +159,7 @@ public class ResultsActivity extends BaseActivity {
     }
 
     private void DrawGraph() {
-        // init example series data
+
         GraphView graph = (GraphView)findViewById(R.id.graphResults);
 
         DataPoint[]resultDataPoints = new DataPoint[listResults.size()];
@@ -173,10 +170,7 @@ public class ResultsActivity extends BaseActivity {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(resultDataPoints);
         graph.addSeries(series);
 
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-       // staticLabelsFormatter.setHorizontalLabels(new String[]{"0", "1", "2", "2", "3", "4", "5", "6", "7", "8", "9", "10", " ", "SEC."});
-       // staticLabelsFormatter.setVerticalLabels(new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "LITER"});
-       // graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        //StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
 
         series.setTitle("(FVC, forced vital capacity) in L/s");
 
@@ -185,6 +179,12 @@ public class ResultsActivity extends BaseActivity {
 
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(1);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(16000);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(16);
+        graph.getViewport().setYAxisBoundsManual(true);
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {

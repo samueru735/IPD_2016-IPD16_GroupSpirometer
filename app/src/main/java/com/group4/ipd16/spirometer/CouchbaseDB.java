@@ -18,6 +18,7 @@ import com.couchbase.lite.android.AndroidContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -168,6 +169,30 @@ public class CouchbaseDB  {
         try{
             //save properties to the document
             document.putProperties(userMap);
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "error putting", e);
+        }
+    }
+    protected void CreateUserDocument(Map<String, Object> userMap){
+        // create new document and add data
+        String date = new Date().toString();
+        date = date.replaceAll("[^a-zA-Z0-9]","");
+        Document document = database.getDocument("user-LIVE-" + userMap.get("first_name") + userMap.get("last_name") +"-"+ date);
+        try{
+            //save properties to the document
+            document.putProperties(userMap);
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "error putting", e);
+        }
+    }
+    protected void CreateDataDocument(Map<String, Object> dataMap){
+        // create new document and add data
+        String date = new Date().toString();
+        date = date.replaceAll("[^a-zA-Z0-9]","");
+        Document document = database.getDocument("data-"+ currentUser.getFirst_name() + currentUser.getLast_name() +"-"+ date);
+        try{
+            //save properties to the document
+            document.putProperties(dataMap);
         } catch (CouchbaseLiteException e) {
             Log.e(TAG, "error putting", e);
         }

@@ -12,7 +12,6 @@ public class User {
     private String gender;
     private String ethnicity;
 
-
     //constructors
     public User() {
 
