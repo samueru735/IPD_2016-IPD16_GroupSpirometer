@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/HomeTextView"
-            android:text="How do I use the Spirometer app?\nThe Spirometer device has to connected with your smartphone through bluetooth connection.\nOnce you made a connection you can begin the lung test.\n\nInstructions:\n-Quickly breathe in and out a couple of times\n-Take one deep breath\n-Breathe out as hard as you can in the Spiro pro device for as long as possible\n-View your results\nVisit our website at www.spiro-pro.com"
+            android:text="How do I use the Spirometer app?\nThe Spirometer device has to be connected to your smartphone through bluetooth connection.\nOnce you made a connection you can begin the lung test.\n\nInstructions:\n-Take a deep breath\n-Breathe out as hard as you can in the Spiro pro device for as long as possible\n-View your results\nVisit our website at www.spiro-pro.com"
             android:fontFamily="sans-serif-condensed"
             android:textSize="16dp"
             android:maxLines="6"
@@ -128,6 +128,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text=""
             android:id="@+id/tvResult"
             />
         <TextView

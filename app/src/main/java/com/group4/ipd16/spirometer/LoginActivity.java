@@ -12,11 +12,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.replicator.Replication;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String SYNC_URL = "http://spiro.4de.win:4985/sync_gateway";
     private Spinner userSpinner;
 
     private Button loginKnop, registerBtn;
@@ -36,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         spiroDB = CouchbaseDB.getSpiroDB();
         spiroDB.setUpCouchbaseLiteDB();
         addUsersToSpinner();
+        startSync();
 
         /*login */
         password = (EditText)findViewById(R.id.passwordtext);
@@ -54,10 +61,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String userID = CouchbaseDB.getSpiroDB().login(userSpinner.getSelectedItem().toString(), password.getText().toString());
-                if(userID == null){
+                if (userID == null) {
                     Toast.makeText(LoginActivity.this, "No password...", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     switch (userID) {
                         case "Access denied":
                             Toast.makeText(LoginActivity.this, "OOPS wrong...", Toast.LENGTH_SHORT).show();
@@ -67,26 +73,39 @@ public class LoginActivity extends AppCompatActivity {
                             break;
                         default:
                             Toast.makeText(LoginActivity.this, "Logging in with uId " + userID, Toast.LENGTH_SHORT).show();
+
                             Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                             i.putExtra("user_id", userID);
                             i.putExtra("userName", String.valueOf(userSpinner.getSelectedItem()));
                             BaseActivity.FULL_NAME = (String.valueOf(userSpinner.getSelectedItem()));
                             BaseActivity.GENDER = spiroDB.getUserById(userID).getGender();
-                            try{
-                                Log.i("TAG" ,"FVC for this user: "+ spiroDB.getFvcFromId(userID));
-                            }
-                            catch (NullPointerException e){
-                                Log.e("TAG", "No fvc results yet" );
-                            }
                             startActivity(i);
                             break;
                     }
                 }
-
             }
         });
     }
+    private void startSync() {  // upload database users/data to online Couchbase Server
 
+        URL syncUrl;
+        try {
+            syncUrl = new URL(SYNC_URL);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        Replication pushReplication = null;
+        try {
+            pushReplication = CouchbaseDB.getSpiroDB().getDatabaseInstance().createPushReplication(syncUrl);
+            Log.i("TAG", "Syncing...");
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
+        pushReplication.setContinuous(true);
+
+        pushReplication.start();
+    }
 
     private void addUsersToSpinner() {
         userSpinner = (Spinner)findViewById(R.id.userSpinner);
@@ -94,14 +113,12 @@ public class LoginActivity extends AppCompatActivity {
         List<User> users = new ArrayList<>();
 
         try{
-            //users = db.getAllUsers();
             userList = spiroDB.getAllUsers();
         }
-        catch (Exception ex){
+        catch (Exception ex){   // something 's wrong with the users
             Log.i("TAG", "Deleting everything...");
-            spiroDB.cleanDB();
+            spiroDB.cleanDB();  // clean db
         }
-
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, userList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userSpinner.setAdapter(dataAdapter);
