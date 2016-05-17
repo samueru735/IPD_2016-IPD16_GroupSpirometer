@@ -41,11 +41,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome"
+            android:text="Welcome to Spiro pro!"
             android:id="@+id/tvWelcome"
             android:gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif-condensed"
             android:textSize="30dp"/>
 
@@ -53,10 +52,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/HomeTextView"
-            android:maxLines="5"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            android:text="How do I use the Spirometer app?\nThe Spirometer device has to connected with your smartphone through bluetooth connection.\nOnce you made a connection you can begin the lung test.\n\nInstructions:\n-Quickly breathe in and out a couple of times\n-Take one deep breath\n-Breathe out as hard as you can in the Spiro pro device for as long as possible\n-View your results\nVisit our website at www.spiro-pro.com"
             android:fontFamily="sans-serif-condensed"
-            android:textSize="16dp"></TextView>
+            android:textSize="16dp"
+            android:maxLines="6"
+            android:lines="6"
+            android:scrollbars = "vertical"
+            />
+
         />
     </LinearLayout>
 
@@ -98,8 +101,13 @@
             android:textColor="#FFFF"
             android:textStyle="bold"
             android:background="#F000"
-            android:layout_marginTop="30dp"            
             />
+        <ProgressBar
+            android:id="@+id/loadingPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,8 +78,10 @@ public class HomeActivity extends BaseActivity {
                     btConn.sendData("s");
                     btnStartResultActivity.setVisibility(View.VISIBLE);
                     //startActivity(resultIntent);
+                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                 } catch (Exception e) {
                     Log.e("TAG", e.toString());
+                    Toast.makeText(HomeActivity.this, "Oops... An error occurred, try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
