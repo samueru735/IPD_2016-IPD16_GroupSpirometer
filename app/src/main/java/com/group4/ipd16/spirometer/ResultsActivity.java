@@ -182,9 +182,6 @@ public class ResultsActivity extends BaseActivity {
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(16000);
         graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(16);
-        graph.getViewport().setYAxisBoundsManual(true);
         series.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {

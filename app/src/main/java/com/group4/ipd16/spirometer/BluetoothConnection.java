@@ -36,7 +36,7 @@ public class BluetoothConnection{
     private TextView result, sentdata;
     private List<Float> listResults;
 
-    private static BluetoothConnection mIstance = null;
+    private static BluetoothConnection mInstance = null;
 
     private String mac_address;
     private boolean stop = false;
@@ -50,9 +50,9 @@ public class BluetoothConnection{
     }
 
     public static BluetoothConnection getInstance(){
-        if(mIstance == null)
-            mIstance = new BluetoothConnection();
-        return mIstance;
+        if(mInstance == null)
+            mInstance = new BluetoothConnection();
+        return mInstance;
     }
 
     public void SentData(TextView sentdata) {
@@ -169,18 +169,12 @@ public class BluetoothConnection{
                                             try {
                                            //     Log.i("TAG", "trying");
                                                 String dataString = data.toString();
-                                                dataString = dataString.replaceAll("[^\\d.]", "");
+                                                dataString = dataString.replaceAll("[^\\d.]", ""); // clean up the String
                                                 listResults.add(Float.parseFloat(dataString));
-                                                //if(stop == true){
-                                                 //   mmOutputStream.write(("x").getBytes());
-                                               // }
                                             }
                                             catch (Exception e){
                                                 e.printStackTrace();
                                             }
-                                            //String dataString = data.toString();
-                                           // String testData = dataString.trim();
-                                            //result.setText(listResults.toString());
                                             result.setText(data.toString());
                                            // Log.i("TAG", "data received");
                                         }
